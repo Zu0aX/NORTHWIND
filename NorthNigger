@@ -1,0 +1,267 @@
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("NORTHWIND By Zu0a", "BloodTheme")
+ 
+    -- MAIN
+    local Main = Window:NewTab("Main")
+    local MainSection = Main:NewSection("Main")
+ 
+    MainSection:NewDropdown("Hitbox Extender", "Hitbox Extender for Northwind, or anything really.", {"HBE"}, function(v)
+if syn then else
+loadstring(game:HttpGet('https://raw.githubusercontent.com/2dgeneralspam1/lua-releases/main/iris-compat.lua'))()
+end
+loadstring(game:HttpGet('https://raw.githubusercontent.com/2dgeneralspam1/CheatX/main/loader.lua'))() 
+    end)
+ 
+    MainSection:NewDropdown("Walkspeed Bypass", "Used for games like northwind!", {"Press Q to use it."}, function(v)
+down = false
+velocity = Instance.new("BodyVelocity")
+velocity.maxForce = Vector3.new(100000, 0, 100000)
+---vv Use that to change the speed v
+local speed = 28
+gyro = Instance.new("BodyGyro")
+gyro.maxTorque = Vector3.new(100000, 0, 100000)
+
+local hum = game.Players.LocalPlayer.Character.Humanoid
+
+function onButton1Down(mouse)
+down = true
+velocity.Parent = game.Players.LocalPlayer.Character.UpperTorso
+velocity.velocity = (hum.MoveDirection) * speed
+gyro.Parent = game.Players.LocalPlayer.Character.UpperTorso
+while down do
+if not down then break end
+velocity.velocity = (hum.MoveDirection) * speed
+local refpos = gyro.Parent.Position + (gyro.Parent.Position - workspace.CurrentCamera.CoordinateFrame.p).unit * 5
+gyro.cframe = CFrame.new(gyro.Parent.Position, Vector3.new(refpos.x, gyro.Parent.Position.y, refpos.z))
+wait(0.1)
+end
+end
+
+function onButton1Up(mouse)
+velocity.Parent = nil
+gyro.Parent = nil
+down = false
+end
+--To Change the key in those 2 lines, replace the "q" with your desired key
+function onSelected(mouse)
+mouse.KeyDown:connect(function(k) if k:lower()=="q"then onButton1Down(mouse)end end)
+mouse.KeyUp:connect(function(k) if k:lower()=="q"then onButton1Up(mouse)end end)
+end
+
+onSelected(game.Players.LocalPlayer:GetMouse())
+end)
+
+   MainSection:NewDropdown("Fullbright", "Can be buggy sometimes just server hop", {"ON/OFF"}, function(v)
+if not _G.FullBrightExecuted then
+
+	_G.FullBrightEnabled = false
+
+	_G.NormalLightingSettings = {
+		Brightness = game:GetService("Lighting").Brightness,
+		ClockTime = game:GetService("Lighting").ClockTime,
+		FogEnd = game:GetService("Lighting").FogEnd,
+		GlobalShadows = game:GetService("Lighting").GlobalShadows,
+		Ambient = game:GetService("Lighting").Ambient
+	}
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("Brightness"):Connect(function()
+		if game:GetService("Lighting").Brightness ~= 1 and game:GetService("Lighting").Brightness ~= _G.NormalLightingSettings.Brightness then
+			_G.NormalLightingSettings.Brightness = game:GetService("Lighting").Brightness
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").Brightness = 1
+		end
+	end)
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("ClockTime"):Connect(function()
+		if game:GetService("Lighting").ClockTime ~= 12 and game:GetService("Lighting").ClockTime ~= _G.NormalLightingSettings.ClockTime then
+			_G.NormalLightingSettings.ClockTime = game:GetService("Lighting").ClockTime
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").ClockTime = 12
+		end
+	end)
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("FogEnd"):Connect(function()
+		if game:GetService("Lighting").FogEnd ~= 786543 and game:GetService("Lighting").FogEnd ~= _G.NormalLightingSettings.FogEnd then
+			_G.NormalLightingSettings.FogEnd = game:GetService("Lighting").FogEnd
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").FogEnd = 786543
+		end
+	end)
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("GlobalShadows"):Connect(function()
+		if game:GetService("Lighting").GlobalShadows ~= false and game:GetService("Lighting").GlobalShadows ~= _G.NormalLightingSettings.GlobalShadows then
+			_G.NormalLightingSettings.GlobalShadows = game:GetService("Lighting").GlobalShadows
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").GlobalShadows = false
+		end
+	end)
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("Ambient"):Connect(function()
+		if game:GetService("Lighting").Ambient ~= Color3.fromRGB(178, 178, 178) and game:GetService("Lighting").Ambient ~= _G.NormalLightingSettings.Ambient then
+			_G.NormalLightingSettings.Ambient = game:GetService("Lighting").Ambient
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
+		end
+	end)
+
+	game:GetService("Lighting").Brightness = 1
+	game:GetService("Lighting").ClockTime = 12
+	game:GetService("Lighting").FogEnd = 786543
+	game:GetService("Lighting").GlobalShadows = false
+	game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
+
+	local LatestValue = true
+	spawn(function()
+		repeat
+			wait()
+		until _G.FullBrightEnabled
+		while wait() do
+			if _G.FullBrightEnabled ~= LatestValue then
+				if not _G.FullBrightEnabled then
+					game:GetService("Lighting").Brightness = _G.NormalLightingSettings.Brightness
+					game:GetService("Lighting").ClockTime = _G.NormalLightingSettings.ClockTime
+					game:GetService("Lighting").FogEnd = _G.NormalLightingSettings.FogEnd
+					game:GetService("Lighting").GlobalShadows = _G.NormalLightingSettings.GlobalShadows
+					game:GetService("Lighting").Ambient = _G.NormalLightingSettings.Ambient
+				else
+					game:GetService("Lighting").Brightness = 1
+					game:GetService("Lighting").ClockTime = 12
+					game:GetService("Lighting").FogEnd = 786543
+					game:GetService("Lighting").GlobalShadows = false
+					game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
+				end
+				LatestValue = not LatestValue
+			end
+		end
+	end)
+end
+
+_G.FullBrightExecuted = true
+_G.FullBrightEnabled = not _G.FullBrightEnabled
+
+end)
+
+   MainSection:NewDropdown("Infinite Yeild", "Hub for expoloits.", {"Should only be used for FC,NOFOG"}, function(v)
+loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end)
+
+
+    -- TELEPORT
+    local TeleportSection = Main:NewSection("Teleport")
+
+   TeleportSection:NewDropdown("Ellesmere TP", "Teleport to Ellesmere", {"Teleports to Ellesmere, don't be in combat."}, function(v)
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(5620227713, player)
+end)
+   TeleportSection:NewDropdown("Stonemore TP", "Teleport to Stonemore", {"Teleports to Stonemore, don't be in combat."}, function(v)
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(6249721735, player) 
+   end)
+   TeleportSection:NewDropdown("Isle of Rupert TP", "Teleport to Rupert", {"Teleports to Rupert, don't be in combat."}, function(v)
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(5465507265, player) 
+end)
+   TeleportSection:NewDropdown("Cantermagne TP", "Teleport to Cantermagne", {"Teleports to Cantermagne, don't be in combat."}, function(v)
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(5620237741, player) 
+end)
+   TeleportSection:NewDropdown("Beuval Isle TP", "Teleport to Beuval", {"Teleports to Beuval, don't be in combat."}, function(v)
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(5620237900, player)
+end)
+
+    local ESPSection = Main:NewSection("ESP")
+       ESPSection:NewDropdown("Ore ESP", "Can be buggy sometimes just server hop", {"Make those neat metallic materials!"}, function(v)
+while true do
+   list = {}
+for i,v in pairs(game.Workspace.StaticProps.Resources:GetChildren()) do
+   if (v.Name):match("deposit") then
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.Rock
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(2,0,2,0)
+    c.BorderSizePixel = 0
+    c.TextSize = 5
+    c.Text = v.Name
+    v.Rock.BrickColor = BrickColor.new("Hot pink")
+    v.Rock.Material = Enum.Material.Neon
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+end
+wait(10)
+for x, v in ipairs(list) do
+       v:Destroy()
+end
+wait(1)
+end
+end)
+    ESPSection:NewDropdown("Animal ESP", "Can be buggy sometimes just server hop", {"Find those rare pelt animals!"}, function(v)
+while true do
+   list = {}
+for i,v in pairs(game.Workspace.NPCs.Animals:GetChildren()) do
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.Character.HumanoidRootPart
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(2,0,2,0)
+    c.BorderSizePixel = 0
+    c.TextSize = 10
+    c.Text = v.Name .. v.Character.Torso.BrickColor.Name
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+wait(10)
+for x, v in ipairs(list) do
+       v:Destroy()
+end
+wait(1)
+end
+end)
+    ESPSection:NewDropdown("Player ESP", "Good ESP", {"Stalk players."}, function(v)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()
+end)
