@@ -1,17 +1,13 @@
     local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-    local Window = Library.CreateLib("NORTHWIND By Zu0a", "BloodTheme")
+    local Window = Library.CreateLib("NORTHWIND By Zu0a", "Synapse")
  
     -- MAIN
     local Main = Window:NewTab("Main")
     local MainSection = Main:NewSection("Main")
  
     MainSection:NewDropdown("Hitbox Extender", "Hitbox Extender for Northwind, or anything really.", {"HBE"}, function(v)
-if syn then else
-loadstring(game:HttpGet('https://raw.githubusercontent.com/2dgeneralspam1/lua-releases/main/iris-compat.lua'))()
-end
-loadstring(game:HttpGet('https://raw.githubusercontent.com/2dgeneralspam1/CheatX/main/loader.lua'))() 
-    end)
- 
+if syn then else loadstring(game:HttpGet('https://raw.githubusercontent.com/2dgeneralspam1/lua-releases/main/iris-compat.lua'))()end;local function a()print("Loading...")loadstring(syn.request({Url='https://raw.githubusercontent.com/2dgeneralspam1/CheatX/main/versions/cheatx-old.lua'}).Body)()end;pcall(a)
+ end)
     MainSection:NewDropdown("Walkspeed Bypass", "Used for games like northwind!", {"Press Q to use it."}, function(v)
 down = false
 velocity = Instance.new("BodyVelocity")
@@ -265,3 +261,66 @@ end)
     ESPSection:NewDropdown("Player ESP", "Good ESP", {"Stalk players."}, function(v)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()
 end)
+    ESPSection:NewDropdown("Bird ESP", "Can be buggy sometimes just server hop", {"Server hop rare birds for feathers!"}, function(v)
+while true do
+   list = {}
+for i,v in pairs(game.Workspace.NPCs.Birds:GetChildren()) do
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.Character.Torso
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(2,0,2,0)
+    c.BorderSizePixel = 0
+    c.TextSize = 10
+    c.Text = v.Name .. v.Character.Torso.BrickColor.Name
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+wait(10)
+for x, v in ipairs(list) do
+       v:Destroy()
+end
+wait(1)
+end
+end)
+    ESPSection:NewDropdown("Boss ESP", "Can be buggy sometimes just server hop", {"Server hop boss for fancy lantern exp."}, function(v)
+while true do
+   list = {}
+for i,v in pairs(game.Workspace.NPCs.Humans.BountyCombatNPCs:GetChildren()) do
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.Character.HumanoidRootPart
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(2,0,2,0)
+    c.BorderSizePixel = 0
+    c.TextSize = 10
+    c.Text = v.Name .. v.Character.Torso.BrickColor.Name
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+wait(10)
+for x, v in ipairs(list) do
+       v:Destroy()
+end
+wait(1)
+end
+end)
+    local Main = Window:NewTab("Dupe")
