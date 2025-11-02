@@ -68,7 +68,7 @@ local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
-Character.HumanoidRootPart.CFrame = Workspace.NPCs.Animals["Undead bear_27"].Character.Head.CFrame
+Character.HumanoidRootPart.CFrame = Workspace.NPCs.Animals["Undead bear_24"].Character.Head.CFrame
 end)
 MainSection:NewButton("Bear 2 Teleport", "Teleport", function()
 local Players = game:GetService("Players")
@@ -90,6 +90,13 @@ local Workspace = game:GetService("Workspace")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 Character.HumanoidRootPart.CFrame = Workspace.NPCs.Animals["Undead bear_8"].Character.Head.CFrame
+end)
+MainSection:NewButton("Bear 5 Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = Workspace.NPCs.Animals["Undead bear_25"].Character.Head.CFrame
 end)
 
 
