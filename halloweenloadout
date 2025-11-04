@@ -1,4 +1,4 @@
-		down = false
+down = false
 velocity = Instance.new("BodyVelocity")
 velocity.maxForce = Vector3.new(100000, 0, 100000)
 ---vv Use that to change the speed v
@@ -35,7 +35,7 @@ end
 
 onSelected(game.Players.LocalPlayer:GetMouse())
 
-wait(0.2)
+wait(0.5)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/Other/main/IYNEW"))()
 wait()
