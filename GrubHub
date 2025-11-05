@@ -24,11 +24,11 @@ wait()
         local MainSection = Main:NewSection("Updated Treasure Stick ESP")
         local MainSection = Main:NewSection("- COMING SOON -")
         local MainSection = Main:NewSection("Infinite Stamina REWORKED")
-        local Main = Window:NewTab("Credits")
-        local MainSection = Main:NewSection("- DEVELOPERS -")
+		local MainSection = Main:NewSection("- DEVELOPERS -")
         local MainSection = Main:NewSection("Zu0a")
         local MainSection = Main:NewSection("- HELPERS -")
         local MainSection = Main:NewSection("Blissful#4992")
+
 
 local Main = Window:NewTab("Loadouts")
 
