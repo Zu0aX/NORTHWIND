@@ -79,6 +79,14 @@ local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 Character.HumanoidRootPart.CFrame = CFrame.new(-692, 117, -248)
     end)
+MainSection:NewButton("Outside Jail", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-1109,283,2765)
+    end)
 MainSection:NewButton("Mines (BOUNTY)", "Teleport", function()
 
 local Players = game:GetService("Players")
