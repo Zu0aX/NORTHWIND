@@ -1,0 +1,89 @@
+wait()
+game:service"NetworkClient".ChildRemoved:Connect(function()
+       game:service"TeleportService":Teleport(game.PlaceId);
+end)
+
+wait(0.6)
+
+ local Player = game:GetService("Players").LocalPlayer
+local Mouse = Player:GetMouse()
+local Camera = game:GetService("Workspace").CurrentCamera
+local UIS = game:GetService("UserInputService")
+local TS = game:GetService("TweenService")
+
+wait()
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("Bounty Farming GUI", "DarkTheme")
+ 
+    -- MAIN
+    
+            local Main = Window:NewTab("RESET B4 SELECT")
+        local MainSection = Main:NewSection("Added all WPS")
+
+	    local Main = Window:NewTab("Stonemore Waypoints")
+    local MainSection = Main:NewSection("Teleports")
+
+
+MainSection:NewButton("Bounty Board", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(1579,171,-1615)
+end)
+MainSection:NewButton("Jail", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(1725,73,-1626)
+end)
+MainSection:NewButton("Safezone", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(418,67,1283)
+end)
+		-- beauval
+	    local Main = Window:NewTab("Beauval Waypoints")
+    local MainSection = Main:NewSection("Teleports")
+
+
+MainSection:NewButton("BANK BOUNTY", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(198, 47, 423)
+    end)
+MainSection:NewButton("Jail", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-1624, 38, 250)
+    end)
+
+-- canter 
+    local Main = Window:NewTab("Canter Waypoints")
+    local MainSection = Main:NewSection("Teleports")
+
+MainSection:NewButton("BANK BOUNTY", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-692, 117, -248)
+    end)
+MainSection:NewButton("Mines (BOUNTY)", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-699, 186, 2576)
+    end)
