@@ -30,13 +30,28 @@ wait()
         local MainSection = Main:NewSection("- HELPERS -")
         local MainSection = Main:NewSection("Blissful#4992")
 
-        
+local Main = Window:NewTab("Loadouts")
+
+local LoadoutSection = Main:NewSection("Loadouts")
+
+LoadoutSection:NewButton("Halloween Farming", "test", function()
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/halloweenloadout'))()
+
+end)
 
 
 		    local Main = Window:NewTab("Halloween Shit")
-    local MainSection = Main:NewSection("All Functions")
 
 local MainSection = Main:NewSection("Misc Teleports")
+
+MainSection:NewButton("Wendigo Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = workspace.NPCs.Animals.Wendigo_44.Character.Head.CFrame
+end)
 
 MainSection:NewButton("Contracts Guy/Safezone", "Teleport", function()
 local Players = game:GetService("Players")
@@ -46,23 +61,9 @@ local Character = LocalPlayer.Character
 Character.HumanoidRootPart.CFrame = CFrame.new(418,67,1283)
 end)
 
-MainSection:NewButton("Small Treasure Teleport", "Teleport", function()
-local Players = game:GetService("Players")
-local Workspace = game:GetService("Workspace")
-local LocalPlayer = Players.LocalPlayer
-local Character = LocalPlayer.Character
-Character.HumanoidRootPart.CFrame = Workspace.StaticProps.SmallChests["Small treasure chest"].Metal.CFrame
-end)
 
 local MainSection = Main:NewSection("Animal Teleports")
 
-MainSection:NewButton("Wendigo Teleport", "Teleport", function()
-local Players = game:GetService("Players")
-local Workspace = game:GetService("Workspace")
-local LocalPlayer = Players.LocalPlayer
-local Character = LocalPlayer.Character
-Character.HumanoidRootPart.CFrame = workspace.NPCs.Animals.Wendigo_44.Character.Head.CFrame
-end)
 MainSection:NewButton("Bear 1 Teleport", "Teleport", function()
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
@@ -1024,6 +1025,16 @@ ESPSection:NewButton("Safe ESP", "Storage and Player Loot ESP", function()
 end
     end)
 
+	    local Main = Window:NewTab("Farming")
+        local FarmingSection = Main:NewSection("Farming Teleports")
+
+FarmingSection:NewButton("Small Treasure Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = Workspace.StaticProps.SmallChests["Small treasure chest"].Metal.CFrame
+end)
 
 	    local Main = Window:NewTab("Teleports")
         local TeleportSection = Main:NewSection("Island Teleports")
