@@ -19,6 +19,32 @@ wait()
     
             local Main = Window:NewTab("RESET B4 SELECT")
         local MainSection = Main:NewSection("Added all WPS")
+	    local Main = Window:NewTab("Ellesmere Waypoints")
+    local MainSection = Main:NewSection("Teleports")
+
+
+MainSection:NewButton("Board", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-126,56,-2581)
+end)
+MainSection:NewButton("Outside Jail", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(1884,101,-2400)
+end)
+MainSection:NewButton("Get Bounty", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(1677,105,-2527)
+end)
+
 
 	    local Main = Window:NewTab("Stonemore Waypoints")
     local MainSection = Main:NewSection("Teleports")
