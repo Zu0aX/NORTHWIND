@@ -92,6 +92,16 @@ MainSection:NewButton("Mines (BOUNTY)", "Teleport", function()
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local LocalPlayer = Players.LocalPlayer
+
+            local Main = Window:NewTab("Rupert Teleports")
+        local TeleportSection = Main:NewSection("Waypoints")
+
+   TeleportSection:NewButton("Crate Supplier", "TP", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3518,48,1226)
+end)
+   TeleportSection:NewButton("Den", "TP", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2796,11,3304)
+   end)
 local Character = LocalPlayer.Character
 Character.HumanoidRootPart.CFrame = CFrame.new(-699, 186, 2576)
     end)
