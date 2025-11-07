@@ -17,13 +17,6 @@ wait()
     local MainSection = Main:NewSection("Teleports")
 
 
-MainSection:NewButton("Board", "Teleport", function()
-local Players = game:GetService("Players")
-local Workspace = game:GetService("Workspace")
-local LocalPlayer = Players.LocalPlayer
-local Character = LocalPlayer.Character
-Character.HumanoidRootPart.CFrame = CFrame.new(-126,56,-2581)
-end)
 
 MainSection:NewButton("Claim Area", "Teleport", function()
 local Players = game:GetService("Players")
@@ -46,6 +39,94 @@ local Workspace = game:GetService("Workspace")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 Character.HumanoidRootPart.CFrame = CFrame.new(1677,105,-2527)
+end)
+
+    local MainSection = Main:NewSection("Extra Buttons")
+MainSection:NewButton("Waypoint Keys", "(press key 1,2,3 on keypad to teleport)", function()
+--- GET BOUNTY ---
+
+
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function onInputBegan(input, gameProcessed)
+	-- Check if the key pressed is 'one' and if the game isn't processing the input (e.g., for typing)
+	if input.KeyCode == Enum.KeyCode.KeypadOne and not gameProcessed then
+		-- Define the teleport destination coordinates (change these to your desired location)
+		local teleportPosition = Vector3.new(1677,105,-2527) 
+		
+		-- Teleport the player's HumanoidRootPart to the new CFrame
+		humanoidRootPart.CFrame = CFrame.new(teleportPosition)
+	end
+end
+
+-- Connect the function to the InputBegan event
+UserInputService.InputBegan:Connect(onInputBegan)
+
+wait(0.1)
+
+-- OUTSIDE JAIL --
+
+
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function onInputBegan(input, gameProcessed)
+	-- Check if the key pressed is 'two' and if the game isn't processing the input (e.g., for typing)
+	if input.KeyCode == Enum.KeyCode.KeypadTwo and not gameProcessed then
+		-- Define the teleport destination coordinates (change these to your desired location)
+		local teleportPosition = Vector3.new(1884,101,-2400) 
+		
+		-- Teleport the player's HumanoidRootPart to the new CFrame
+		humanoidRootPart.CFrame = CFrame.new(teleportPosition)
+	end
+end
+
+-- Connect the function to the InputBegan event
+UserInputService.InputBegan:Connect(onInputBegan)
+
+wait(0.1)
+
+--- CLAIM AREA ---
+
+
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function onInputBegan(input, gameProcessed)
+	-- Check if the key pressed is 'three' and if the game isn't processing the input (e.g., for typing)
+	if input.KeyCode == Enum.KeyCode.KeypadThree and not gameProcessed then
+		-- Define the teleport destination coordinates (change these to your desired location)
+		local teleportPosition = Vector3.new(766,70,691) 
+		
+		-- Teleport the player's HumanoidRootPart to the new CFrame
+		humanoidRootPart.CFrame = CFrame.new(teleportPosition)
+	end
+end
+
+-- Connect the function to the InputBegan event
+UserInputService.InputBegan:Connect(onInputBegan)
+
+
+end)
+MainSection:NewButton("Board TP", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-126,56,-2581)
 end)
 
 
