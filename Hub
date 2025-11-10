@@ -14,7 +14,7 @@ local TS = game:GetService("TweenService")
 
 wait()
     local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-    local Window = Library.CreateLib("Grubman Northwind GUI", "Serpent")
+    local Window = Library.CreateLib("Northwind GUI", "Serpent")
  
     -- MAIN
     
