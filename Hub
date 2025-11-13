@@ -1075,6 +1075,13 @@ local player = game:GetService("Players").LocalPlayer
 local TeleportService = game:GetService("TeleportService")
  TeleportService:Teleport(5620237900, player)
 end)
+   TeleportSection:NewDropdown("Event Island TP", "Teleport to Event Isle", {"Teleports to Event, don't be in combat."}, function(v)
+
+
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(105329650725789, player)
+end)
 
 
     local Main = Window:NewTab("NPCs")
