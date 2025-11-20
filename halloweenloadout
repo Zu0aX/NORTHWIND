@@ -1,0 +1,76 @@
+wait()
+game:service"NetworkClient".ChildRemoved:Connect(function()
+       game:service"TeleportService":Teleport(game.PlaceId);
+end)
+
+wait(0)
+
+ local Player = game:GetService("Players").LocalPlayer
+local Mouse = Player:GetMouse()
+local Camera = game:GetService("Workspace").CurrentCamera
+local UIS = game:GetService("UserInputService")
+local TS = game:GetService("TweenService")
+
+wait()
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Igor2387/NORTHWIND/refs/heads/main/Zu0aLib"))()
+    local Window = Library.CreateLib("Halloween Farming GUI", "GrapeTheme")
+
+		    local Main = Window:NewTab("Halloween Shit")
+
+local MainSection = Main:NewSection("Misc Teleports")
+
+MainSection:NewButton("Wendigo Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = workspace.NPCs.Animals.Wendigo_44.Character.Head.CFrame
+end)
+
+MainSection:NewButton("Contracts Guy/Safezone", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(418,67,1283)
+end)
+
+
+local MainSection = Main:NewSection("Animal Teleports")
+
+MainSection:NewButton("Bear 1 Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = Workspace.NPCs.Animals["Undead bear_24"].Character.Head.CFrame
+end)
+MainSection:NewButton("Bear 2 Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = Workspace.NPCs.Animals["Undead bear_48"].Character.Head.CFrame
+end)
+MainSection:NewButton("Bear 3 Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = Workspace.NPCs.Animals["Undead bear_27"].Character.Head.CFrame
+end)
+MainSection:NewButton("Bear 4 Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = Workspace.NPCs.Animals["Undead bear_8"].Character.Head.CFrame
+end)
+MainSection:NewButton("Bear 5 Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = Workspace.NPCs.Animals["Undead bear_25"].Character.Head.CFrame
+end)
+
