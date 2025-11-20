@@ -1,0 +1,136 @@
+-- main source
+wait()
+game:service"NetworkClient".ChildRemoved:Connect(function()
+       game:service"TeleportService":Teleport(game.PlaceId);
+end)
+wait()
+local notif = game:GetService("StarterGui")
+notif:SetCore("SendNotification", {
+    Title = "Notification",
+    Text = "Script Executed - Loading GUI",
+    Duration = 10
+
+})
+
+wait(0.6)
+
+ local Player = game:GetService("Players").LocalPlayer
+local Mouse = Player:GetMouse()
+local Camera = game:GetService("Workspace").CurrentCamera
+local UIS = game:GetService("UserInputService")
+local TS = game:GetService("TweenService")
+
+wait()
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+    local Window = Library.CreateLib("ELLESMERE MINING GUI", "DarkTheme")
+ 
+    -- MAIN
+    
+            local Main = Window:NewTab("RESET B4 SELECT")
+        local MainSection = Main:NewSection("Added all WPS")
+    local Main = Window:NewTab("Ellesmere Waypoints")
+    local MainSection = Main:NewSection("Teleports")
+
+MainSection:NewButton("Safezone", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(495, 293, -2109)
+	end)
+MainSection:NewButton("Treasure Board", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(483, 292, -2190)
+	end)
+MainSection:NewButton("4 Cobalt 1 Wolfram", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-1111, 310, -664)
+	end)
+MainSection:NewButton("4 Rutile", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-31, 465, -1137)
+	end)
+MainSection:NewButton("2 Azurite", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(531, 318, -1303)
+	end)
+MainSection:NewButton("2 Crimsonite 1 Vanadite", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(252, 96, -864)
+	end)
+
+MainSection:NewButton("3 Gold 1 Wolfram", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(263, 121, -641)
+	end)
+MainSection:NewButton("5 Wolfram 6 Platinum 2 Crimsonite", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-522, 206, -825)
+	end)
+
+MainSection:NewButton("2 Vanadite 3 Azurite", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(223, 67, -208)
+	end)
+	MainSection:NewButton("3 Gold 1 Platinum", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-138, 74, -245)
+	end)
+		MainSection:NewButton("4 Wulfenite 1 Platinum 1 Gold", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-141, 214, -314)
+	end)
+		MainSection:NewButton("3 Wulfenite", "Teleport", function()
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = CFrame.new(-117, 390, -555)
+	end)
+
+
+
+
+
