@@ -1,0 +1,1404 @@
+-- main source
+wait()
+game:service"NetworkClient".ChildRemoved:Connect(function()
+       game:service"TeleportService":Teleport(game.PlaceId);
+end)
+
+wait(0)
+
+ local Player = game:GetService("Players").LocalPlayer
+local Mouse = Player:GetMouse()
+local Camera = game:GetService("Workspace").CurrentCamera
+local UIS = game:GetService("UserInputService")
+local TS = game:GetService("TweenService")
+
+wait()
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Igor2387/NORTHWIND/refs/heads/main/Zu0aLib"))()
+    local Window = Library.CreateLib("Northwind GUI", "BloodTheme")
+ 
+    -- MAIN
+    
+            local Main = Window:NewTab("UPDATED - 11/20/25")
+        local MainSection = Main:NewSection("UI Rework, added more loadouts, updated ESP, more")
+        local MainSection = Main:NewSection("- COMING SOON -")
+        local MainSection = Main:NewSection("Infinite Stamina REWORKED")
+		local MainSection = Main:NewSection("- DEVELOPERS -")
+        local MainSection = Main:NewSection("Zu0a")
+        local MainSection = Main:NewSection("- HELPERS -")
+        local MainSection = Main:NewSection("Blissful#4992")
+		local MainSection = Main:NewSection("FederalNigger")
+
+    local Main = Window:NewTab("Player")
+    local MainSection = Main:NewSection("Player Functions")
+    
+            local function constantset(func_name, script_name)
+    local f = nil
+    for i, k in pairs(getgc()) do
+        if f ~= nil then 
+            break
+        end
+        if typeof(k) == "function" and islclosure(k) then
+            local info = debug.getconstants(k)
+            local SHORT_SRC = tostring(debug.getinfo(k).short_src)
+            for _,v in pairs(info) do
+                if tostring(debug.getinfo(k).name) == func_name and string.match(SHORT_SRC, script_name) then
+                    f = k
+                    break
+                end
+            end
+        end
+    end
+    return f
+end
+
+-- hbe ui
+MainSection:NewButton("HBE GUI", "Increased Walkspeed.", function()
+
+end)
+----- speed ----------
+   MainSection:NewButton("Walkspeed Bypass - Q", "Increased Walkspeed.", function()
+
+down = false
+velocity = Instance.new("BodyVelocity")
+velocity.maxForce = Vector3.new(100000, 0, 100000)
+---vv Use that to change the speed v
+local speed = 28
+gyro = Instance.new("BodyGyro")
+gyro.maxTorque = Vector3.new(100000, 0, 100000)
+
+local hum = game.Players.LocalPlayer.Character.Humanoid
+
+function onButton1Down(mouse)
+down = true
+velocity.Parent = game.Players.LocalPlayer.Character.UpperTorso
+velocity.velocity = (hum.MoveDirection) * speed
+gyro.Parent = game.Players.LocalPlayer.Character.UpperTorso
+while down do
+if not down then break end
+velocity.velocity = (hum.MoveDirection) * speed
+local refpos = gyro.Parent.Position + (gyro.Parent.Position - workspace.CurrentCamera.CoordinateFrame.p).unit * 5
+gyro.cframe = CFrame.new(gyro.Parent.Position, Vector3.new(refpos.x, gyro.Parent.Position.y, refpos.z))
+wait(0.1)
+end
+end
+
+function onButton1Up(mouse)
+velocity.Parent = nil
+gyro.Parent = nil
+down = false
+end
+--To Change the key in those 2 lines, replace the "q" with your desired key
+function onSelected(mouse)
+mouse.KeyDown:connect(function(k) if k:lower()=="q"then onButton1Down(mouse)end end)
+mouse.KeyUp:connect(function(k) if k:lower()=="q"then onButton1Up(mouse)end end)
+end
+
+onSelected(game.Players.LocalPlayer:GetMouse())
+end)
+        MainSection:NewToggle("Large Head Hitbox", "toggles hitboxes", function(state)
+    if state then
+            for i, v in ipairs(game.Players:GetChildren()) do
+                if v.Name == game.Players.LocalPlayer.Name then
+                    continue
+                end
+                v.Character.Head.Size = Vector3.new(4.7, 4.7, 4.7)
+                v.Character.Head.Material = "Neon"
+                v.Character.Head.BrickColor = BrickColor.new("Really red")
+                v.Character.Head.Transparency = 0.7
+            end
+
+    else
+        for i, v in ipairs(game.Players:GetChildren()) do
+            if v.Name == game.Players.LocalPlayer.Name then
+                continue
+            end
+            v.Character.Head.Size = Vector3.new(1, 1, 1)
+            v.Character.Head.BrickColor = BrickColor.new("Tan")
+            v.Character.Head.Transparency = 0
+         end
+    end
+end)
+
+        MainSection:NewToggle("Small Head Hitbox", "toggles hitboxes", function(state)
+    if state then
+            for i, v in ipairs(game.Players:GetChildren()) do
+                if v.Name == game.Players.LocalPlayer.Name then
+                    continue
+                end
+                v.Character.Head.Size = Vector3.new(3, 3, 3)
+                v.Character.Head.Material = "Neon"
+                v.Character.Head.BrickColor = BrickColor.new("Really red")
+                v.Character.Head.Transparency = 0.5
+            end
+    else
+        for i, v in ipairs(game.Players:GetChildren()) do
+            if v.Name == game.Players.LocalPlayer.Name then
+                continue
+            end
+            v.Character.Head.Size = Vector3.new(1, 1, 1)
+            v.Character.Head.BrickColor = BrickColor.new("Tan")
+            v.Character.Head.Transparency = 0
+         end
+    end
+end)
+       MainSection:NewToggle("Extra Small Head Hitbox", "toggles hitboxes", function(state)
+    if state then
+            for i, v in ipairs(game.Players:GetChildren()) do
+                if v.Name == game.Players.LocalPlayer.Name then
+                    continue
+                end
+                v.Character.Head.Size = Vector3.new(2, 2, 2)
+                v.Character.Head.Material = "Neon"
+                v.Character.Head.BrickColor = BrickColor.new("Really red")
+                v.Character.Head.Transparency = 0.5
+            end
+    else
+        for i, v in ipairs(game.Players:GetChildren()) do
+            if v.Name == game.Players.LocalPlayer.Name then
+                continue
+            end
+            v.Character.Head.Size = Vector3.new(1, 1, 1)
+            v.Character.Head.BrickColor = BrickColor.new("Tan")
+            v.Character.Head.Transparency = 0
+         end
+    end
+end)
+        MainSection:NewToggle("Large Body Hitbox", "toggles hitboxes", function(state)
+    if state then
+            for i, v in ipairs(game.Players:GetChildren()) do
+                if v.Name == game.Players.LocalPlayer.Name then
+                    continue
+                end
+                v.Character.HumanoidRootPart.Size = Vector3.new(8, 8, 8)
+                v.Character.HumanoidRootPart.Material = "Neon"
+                v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really red")
+                v.Character.HumanoidRootPart.Transparency = 0.7
+            end
+    else
+        for i, v in ipairs(game.Players:GetChildren()) do
+            if v.Name == game.Players.LocalPlayer.Name then
+                continue
+            end
+            v.Character.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
+            v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Tan")
+            v.Character.HumanoidRootPart.Transparency = 1
+         end
+        
+	end
+end)
+        MainSection:NewToggle("Small Body Hitbox", "toggles hitboxes", function(state)
+    if state then
+            for i, v in ipairs(game.Players:GetChildren()) do
+                if v.Name == game.Players.LocalPlayer.Name then
+                    continue
+                end
+                v.Character.HumanoidRootPart.Size = Vector3.new(4, 4, 4)
+                v.Character.HumanoidRootPart.Material = "Neon"
+                v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really red")
+                v.Character.HumanoidRootPart.Transparency = 0.7
+            end
+    else
+        for i, v in ipairs(game.Players:GetChildren()) do
+            if v.Name == game.Players.LocalPlayer.Name then
+                continue
+            end
+            v.Character.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
+            v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Tan")
+            v.Character.HumanoidRootPart.Transparency = 1
+         end
+        
+	end
+end)
+ MainSection:NewButton("AntiAFK Bypass", "Increased AFK TIME.", function()
+ loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/Anti-afk/main/antiafkbyhassanxzyn"))();
+ end)
+ 
+MainSection:NewButton("Infinite Stamina", "STAM", function()
+end)
+
+
+local Main = Window:NewTab("ESPs")
+        local ESPSection = Main:NewSection("All ESPs")
+ ESPSection:NewToggle("Player ESP", "ToggleInfo", function(state)
+    if state then
+
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Igor2387/NORTHWIND/refs/heads/main/playeresp'))()
+
+wait()
+        for i, v in pairs(game.workspace:GetDescendants()) do
+	if v.Name == "GetReal" then
+		v.FillTransparency = 0.5
+		v.OutlineTransparency = 0
+	end
+end
+
+    else
+
+        for i, v in pairs(game.workspace:GetDescendants()) do
+	if v.Name == "GetReal" then
+		v.FillTransparency = 1
+		v.OutlineTransparency = 1
+	end
+end
+
+wait(0.1)
+game:GetService("CoreGui").ESP:Destroy()
+wait(0.1)
+game:GetService("CoreGui").ESP:Destroy()
+    end
+end)
+
+
+ESPSection:NewButton("Ore ESP", "Rock ESP", function()
+
+
+while true do
+   list = {}
+for i,v in pairs(game:GetDescendants()) do
+   if (v.Name):match("deposit") then
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.Rock
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(2,0,2,0)
+    c.BorderSizePixel = 0
+    c.TextSize = 15
+	c.Font = ("SourceSansLight")
+    c.Text = v.Name
+    c.TextColor3 = Color3.fromRGB(245, 205, 48)
+    v.Rock.BrickColor = BrickColor.new("Bright green")
+    v.Rock.Material = Enum.Material.Neon
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+end
+end
+end)
+ESPSection:NewButton("Gem ESP", "Rock ESP", function()
+
+
+       for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Uncut diamond" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 25
+   c.Text = ("Diamond")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 0, 0)
+ end
+end
+wait()
+   for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Uncut amber" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 0, 255)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 25
+   c.Text = ("Amber")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 0, 0)
+ end
+end
+wait()
+   for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Uncut onyx" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 0, 255)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 25
+   c.Text = ("Onyx")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 0, 0)
+ end
+end
+wait()
+   for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Uncut topaz" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 0, 255)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 25
+   c.Text = ("Topaz")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 0, 0)
+ end
+end
+wait()
+   for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Uncut amethyst" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 0, 255)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 25
+   c.Text = ("Amethyst")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 0, 0)
+ end
+end
+wait()
+   for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Uncut sapphire" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 0, 255)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 25
+   c.Text = ("Sapphire")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 0, 0)
+ end
+end
+wait()
+   for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Uncut emerald" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 0, 255)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 25
+   c.Text = ("Emerald")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 0, 0)
+ end
+end
+wait()
+   for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Uncut ruby" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 0, 255)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 25
+   c.Text = ("Ruby")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 0, 0)
+ end
+end
+    end)
+ESPSection:NewButton("Treasure Chest ESP", "Shows the treasure chest", function()
+
+
+            for __,v in pairs(game.workspace.Carriables:GetDescendants()) do -- the path 
+ if v.Name == "Treasure hunt board_TreasureHunt1" then -- the itemgame:GetService("Workspace").Carriables["Treasure hunt board_TreasureHunt3"].MeshPart
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(255, 0, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 20
+   c.Text = ("Treasure Chest")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(0, 255, 0)
+ end
+end
+wait()
+        for __,v in pairs(game.workspace.Carriables:GetDescendants()) do -- the path 
+ if v.Name == "Treasure hunt board_TreasureHunt2" then -- the itemgame:GetService("Workspace").Carriables["Treasure hunt board_TreasureHunt3"].MeshPart
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(255, 0, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 20
+   c.Text = ("Treasure Chest")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(0, 255, 0)
+ end
+end
+wait()
+        for __,v in pairs(game.workspace.Carriables:GetDescendants()) do -- the path 
+ if v.Name == "Treasure hunt board_TreasureHunt3" then -- the itemgame:GetService("Workspace").Carriables["Treasure hunt board_TreasureHunt3"].MeshPart
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(255, 0, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 20
+   c.Text = ("Treasure Chest")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(0, 255, 0)
+ end
+end
+    end)
+ESPSection:NewButton("Treasure Stick ESP", "Shows the treasure steak in the snow/dirt ESP", function()
+
+for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Treasure hunt board_TreasureHunt1" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 20
+   c.TextColor3 = Color3.new(0, 0, 255)
+   c.Text = ("Treasure Stick")
+   c.BackgroundTransparency = 1
+ end
+end
+wait()
+for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Treasure hunt board_TreasureHunt2" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 20
+   c.TextColor3 = Color3.new(0, 0, 255)
+   c.Text = ("Treasure Stick")
+   c.BackgroundTransparency = 1
+ end
+end
+wait()
+for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Treasure hunt board_TreasureHunt3" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 20
+   c.TextColor3 = Color3.new(0, 0, 255)
+   c.Text = ("Treasure Stick")
+   c.BackgroundTransparency = 1
+ end
+end
+    end)
+
+    ESPSection:NewButton("Remains ESP", "Storage and Player Remains ESP", function()
+
+
+    while true do
+   list = {}
+for i,v in pairs(game.Workspace.Carriables:GetChildren()) do
+   if (v.Name):match("remain") then
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.bag
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(2,0,2,0)
+    c.BorderSizePixel = 0
+    c.TextSize = 8
+    c.Text = v.Name
+    c.TextColor3 = Color3.fromRGB(208, 247, 10)
+    v.bag.BrickColor = BrickColor.new("Dark blue")
+    v.bag.Material = Enum.Material.Neon
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+end
+wait(10)
+for x, v in ipairs(list) do
+       v:Destroy()
+end
+wait(1)
+end    
+end)
+ESPSection:NewButton("Fort Chest ESP", "Player Loot ESP", function()
+
+
+        for __,v in pairs(game.workspace.Carriables:GetDescendants()) do -- the path 
+ if v.Name == "Fort chest" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 20
+   c.Text = ("Fort Chest")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(0, 235, 0)
+ end
+end
+    end)
+	ESPSection:NewButton("Base ESP", "Rock ESP", function()
+
+       for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Wooden foundation" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 10
+   c.Text = ("Foundation")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 255, 0)
+ end
+end
+wait()
+
+       for __,v in pairs(game.workspace:GetDescendants()) do -- the path 
+ if v.Name == "Stone foundation" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 10
+   c.Text = ("Foundation")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 255, 0)
+ end
+end
+	
+	end)
+	ESPSection:NewButton("Wall Mounts ESP", "Player Loot ESP", function()
+	    for __,v in pairs(game.workspace.Props.PlayerHouses:GetDescendants()) do -- the path 
+ if v.Name == "Wall weapon mount" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 13
+   c.Text = ("Wall Mount")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(224, 0, 0)
+ end
+end
+	end)
+ESPSection:NewButton("Chest ESP", "Player Loot ESP", function()
+
+
+    for __,v in pairs(game.workspace.Props.PlayerHouses:GetDescendants()) do -- the path 
+ if v.Name == "Wooden chest" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 15
+   c.Text = ("Chest")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(224, 224, 224)
+ end
+end
+wait()
+    for __,v in pairs(game.workspace.Props.PlayerHouses:GetDescendants()) do -- the path 
+ if v.Name == "Wooden crate" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 15
+   c.Text = ("Crate")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(224, 224, 224)
+ end
+end
+wait()
+    for __,v in pairs(game.workspace.Props.PlayerHouses:GetDescendants()) do -- the path 
+ if v.Name == "Wooden barrel" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 15
+   c.Text = ("Barrel")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(224, 224, 224)
+ end
+end
+    end)
+ESPSection:NewButton("Safe ESP", "Storage and Player Loot ESP", function()
+
+
+    for __,v in pairs(game.workspace.Props.PlayerHouses:GetDescendants()) do -- the path 
+ if v.Name == "Safe" then -- the item
+   local a = Instance.new("BillboardGui",v) -- ui
+   a.Name = "Box"
+   a.Size = UDim2.new(1,0, 1,0)
+   a.AlwaysOnTop = true
+   local b = Instance.new("Frame",a)
+   b.Size = UDim2.new(1,0, 1,0)
+   b.BackgroundTransparency = 0.80
+   b.BorderSizePixel = 0
+   b.Transparency = 1
+   b.BackgroundColor3 = Color3.new(0, 255, 0)
+   local c = Instance.new('TextLabel',b)
+   c.Size = UDim2.new(1,0,0.1,0)
+   c.BorderSizePixel = 0
+   c.TextSize = 20
+   c.Text = ("Safe")
+   c.BackgroundTransparency = 1
+   c.TextColor3 = Color3.new(255, 0, 0)
+ end
+end
+    end)
+
+
+	    local Main = Window:NewTab("Teleports")
+        local TeleportSection = Main:NewSection("Island Teleports")
+
+   TeleportSection:NewDropdown("Ellesmere TP", "Teleport to Ellesmere", {"Teleports to Ellesmere, don't be in combat."}, function(v)
+
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(5620227713, player)
+end)
+   TeleportSection:NewDropdown("Stonemore TP", "Teleport to Stonemore", {"Teleports to Stonemore, don't be in combat."}, function(v)
+
+
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(6249721735, player) 
+   end)
+   TeleportSection:NewDropdown("Isle of Rupert TP", "Teleport to Rupert", {"Teleports to Rupert, don't be in combat."}, function(v)
+
+
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(5465507265, player) 
+end)
+   TeleportSection:NewDropdown("Cantermagne TP", "Teleport to Cantermagne", {"Teleports to Cantermagne, don't be in combat."}, function(v)
+
+
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(5620237741, player) 
+end)
+   TeleportSection:NewDropdown("Beuval Isle TP", "Teleport to Beuval", {"Teleports to Beuval, don't be in combat."}, function(v)
+
+
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(5620237900, player)
+end)
+   TeleportSection:NewDropdown("Event Island TP", "Teleport to Event Isle", {"Teleports to Event, don't be in combat."}, function(v)
+
+
+local player = game:GetService("Players").LocalPlayer
+local TeleportService = game:GetService("TeleportService")
+ TeleportService:Teleport(105329650725789, player)
+end)
+
+TeleportSection:NewButton("Small Treasure Teleport", "Teleport", function()
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+Character.HumanoidRootPart.CFrame = Workspace.StaticProps.SmallChests["Small treasure chest"].Metal.CFrame
+end)
+
+    local Main = Window:NewTab("NPCs")
+        local MainSection = Main:NewSection("NPC Modifiers")
+    MainSection:NewButton("Bird Hitbox Extender", "EXPLOIT", function()
+                for k,v in next, game.Workspace.NPCs.Birds:GetChildren() do
+oghead = v.Character:FindFirstChild('Torso')
+if oghead then 
+oghead.Size = Vector3.new(10, 10, 10) 
+oghead.Transparency = 0.6
+oghead.CanCollide = false
+end
+end
+        end)
+    MainSection:NewButton("Animal Hitbox Extender", "EXPLOIT", function()
+        for k,v in next, game.Workspace.NPCs.Animals:GetChildren() do
+oghead = v.Character:FindFirstChild('HumanoidRootPart')
+if oghead then 
+oghead.Size = Vector3.new(10, 10, 10) 
+oghead.Transparency = 0.6
+oghead.CanCollide = false
+end
+end
+        end)
+		MainSection:NewButton("Bounty Boss Hitbox Extender", "Helps player", function()
+
+for _,v in pairs(game.Workspace.NPCs.Humans.BountyCombatNPCs:GetChildren()) do
+v.Character.Head.Size = Vector3.new(6,6,6)
+v.Character.Head.Material = "Neon"
+v.Character.Head.BrickColor = BrickColor.new("Dark blue")
+v.Character.Head.Transparency = 0.6
+v.Character.Head.CanCollide = true
+end
+end)
+MainSection:NewButton("Other NPC's Hitbox Extender", "Helps player", function()
+for _,v in pairs(game.Workspace.NPCs.Humans.Misc:GetChildren()) do
+v.Character.Head.Size = Vector3.new(6,6,6)
+v.Character.Head.Material = "Neon"
+v.Character.Head.BrickColor = BrickColor.new("Dark blue")
+v.Character.Head.Transparency = 0.6
+v.Character.Head.CanCollide = true
+end
+end)
+
+local Fart = Main:NewSection("NPC ESP")
+    Fart:NewButton("Animal ESP", "Animal ESP", function()
+
+
+while true do
+   list = {}
+for i,v in pairs(game.Workspace.NPCs.Animals:GetChildren()) do
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.Character.HumanoidRootPart
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(2,0,2,0)
+    c.BorderSizePixel = 0
+    c.TextSize = 12
+    c.TextColor3 = Color3.fromRGB(255, 128, 0)
+    c.Text = v.Name  .. v.Character.Torso.BrickColor.Name
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+wait(10)
+for x, v in ipairs(list) do
+       v:Destroy()
+end
+wait(1)
+end
+end)
+    Fart:NewButton("Bird ESP", "Bird ESP", function()
+
+
+while true do
+   list = {}
+for i,v in pairs(game.Workspace.NPCs.Birds:GetChildren()) do
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.Character.Torso
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(2,0,2,0)
+    c.BorderSizePixel = 0
+    c.TextSize = 10
+    c.Text = v.Name .. v.Character.Torso.BrickColor.Name
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+wait(10)
+for x, v in ipairs(list) do
+       v:Destroy()
+end
+wait(1)
+end
+end)
+    Fart:NewButton("Bounty Boss ESP", "Boss ESP", function()
+
+while true do
+   list = {}
+for i,v in pairs(game.Workspace.NPCs.Humans.BountyCombatNPCs:GetChildren()) do
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.Character.HumanoidRootPart
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+   Frame.Transparency = 1
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(10,0,10,0)
+    c.BorderSizePixel = 2
+    c.TextSize = 40
+    c.TextColor3 = Color3.fromRGB(0, 255, 0)
+    c.Text = ("Bounty Boss")
+    c.Font = ("SciFi")
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+wait(10)
+for x, v in ipairs(list) do
+       v:Destroy()
+end
+wait(1)
+end
+end)
+    Fart:NewButton("Misc NPC ESP", "NPC ESP", function()
+
+
+while true do
+   list = {}
+for i,v in pairs(game.Workspace.NPCs.Humans.Misc:GetChildren()) do
+   BillboardGui = Instance.new("BillboardGui")
+   local Frame = Instance.new("Frame")
+   BillboardGui.Parent = v.Character.HumanoidRootPart
+   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+   BillboardGui.Active = true
+   BillboardGui.AlwaysOnTop = true
+   BillboardGui.LightInfluence = 1.000
+   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
+   Frame.Parent = BillboardGui
+   Frame.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
+   Frame.BackgroundTransparency = 0.2
+   Frame.Size = UDim2.new(0, 2, 0, 2)
+   Frame.Transparency = 1
+    local c = Instance.new('TextLabel',Frame)
+    c.Size = UDim2.new(10,0,10,0)
+    c.BorderSizePixel = 2
+    c.TextSize = 40
+    c.TextColor3 = Color3.fromRGB(0, 0, 255)
+    c.Text = ("NPC")
+    c.Font = ("SciFi")
+    c.BackgroundTransparency = 1
+    table.insert(list, BillboardGui)
+end
+wait(10)
+for x, v in ipairs(list) do
+       v:Destroy()
+end
+wait(1)
+end
+end)
+
+    local Main = Window:NewTab("Misc")
+        local MainSection = Main:NewSection("Misc Features")
+MainSection:NewButton("Dwarf", "lol", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
+    end)
+
+    MainSection:NewButton("Fullbright", "Brightness", function()
+if not _G.FullBrightExecuted then
+
+	_G.FullBrightEnabled = false
+
+	_G.NormalLightingSettings = {
+		Brightness = game:GetService("Lighting").Brightness,
+		ClockTime = game:GetService("Lighting").ClockTime,
+		FogEnd = game:GetService("Lighting").FogEnd,
+		GlobalShadows = game:GetService("Lighting").GlobalShadows,
+		Ambient = game:GetService("Lighting").Ambient
+	}
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("Brightness"):Connect(function()
+		if game:GetService("Lighting").Brightness ~= 2 and game:GetService("Lighting").Brightness ~= _G.NormalLightingSettings.Brightness then
+			_G.NormalLightingSettings.Brightness = game:GetService("Lighting").Brightness
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").Brightness = 2
+		end
+	end)
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("ClockTime"):Connect(function()
+		if game:GetService("Lighting").ClockTime ~= 14 and game:GetService("Lighting").ClockTime ~= _G.NormalLightingSettings.ClockTime then
+			_G.NormalLightingSettings.ClockTime = game:GetService("Lighting").ClockTime
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").ClockTime = 12
+		end
+	end)
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("FogEnd"):Connect(function()
+		if game:GetService("Lighting").FogEnd ~= 786543 and game:GetService("Lighting").FogEnd ~= _G.NormalLightingSettings.FogEnd then
+			_G.NormalLightingSettings.FogEnd = game:GetService("Lighting").FogEnd
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").FogEnd = 786543
+		end
+	end)
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("GlobalShadows"):Connect(function()
+		if game:GetService("Lighting").GlobalShadows ~= false and game:GetService("Lighting").GlobalShadows ~= _G.NormalLightingSettings.GlobalShadows then
+			_G.NormalLightingSettings.GlobalShadows = game:GetService("Lighting").GlobalShadows
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").GlobalShadows = false
+		end
+	end)
+
+	game:GetService("Lighting"):GetPropertyChangedSignal("Ambient"):Connect(function()
+		if game:GetService("Lighting").Ambient ~= Color3.fromRGB(178, 178, 178) and game:GetService("Lighting").Ambient ~= _G.NormalLightingSettings.Ambient then
+			_G.NormalLightingSettings.Ambient = game:GetService("Lighting").Ambient
+			if not _G.FullBrightEnabled then
+				repeat
+					wait()
+				until _G.FullBrightEnabled
+			end
+			game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
+		end
+	end)
+
+	game:GetService("Lighting").Brightness = 1
+	game:GetService("Lighting").ClockTime = 12
+	game:GetService("Lighting").FogEnd = 786543
+	game:GetService("Lighting").GlobalShadows = false
+	game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
+
+	local LatestValue = true
+	spawn(function()
+		repeat
+			wait()
+		until _G.FullBrightEnabled
+		while wait() do
+			if _G.FullBrightEnabled ~= LatestValue then
+				if not _G.FullBrightEnabled then
+					game:GetService("Lighting").Brightness = _G.NormalLightingSettings.Brightness
+					game:GetService("Lighting").ClockTime = _G.NormalLightingSettings.ClockTime
+					game:GetService("Lighting").FogEnd = _G.NormalLightingSettings.FogEnd
+					game:GetService("Lighting").GlobalShadows = _G.NormalLightingSettings.GlobalShadows
+					game:GetService("Lighting").Ambient = _G.NormalLightingSettings.Ambient
+				else
+					game:GetService("Lighting").Brightness = 1
+					game:GetService("Lighting").ClockTime = 12
+					game:GetService("Lighting").FogEnd = 786543
+					game:GetService("Lighting").GlobalShadows = false
+					game:GetService("Lighting").Ambient = Color3.fromRGB(178, 178, 178)
+				end
+				LatestValue = not LatestValue
+			end
+		end
+	end)
+end
+
+_G.FullBrightExecuted = true
+_G.FullBrightEnabled = not _G.FullBrightEnabled
+end)
+MainSection:NewButton("Remove Fog", "Brightness", function()
+game.Lighting.FogEnd = 100000
+	for i,v in pairs(game.Lighting:GetDescendants()) do
+		if v:IsA("Atmosphere") then
+			v:Destroy()
+		end
+	end
+    end)
+
+MainSection:NewButton("Water Walker", "Ragdolls player", function()
+
+    local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+		local part = Instance.new("Part")
+		part.Parent = workspace
+		part.CFrame = CFrame.new(-1830, 49, 1870)
+        part.Anchored = true
+        part.Size = Vector3.new(5, 5, 5)
+        part.Transparency = 1
+    wait()
+    local Players = game:GetService("Players")
+
+local player = Players.LocalPlayer
+		local part = Instance.new("Part")
+		part.Parent = workspace
+		part.CFrame = CFrame.new(1208, -7, 870)
+        part.Anchored = true
+        part.Size = Vector3.new(10000, 1, 10000)
+        part.Transparency = 1
+    end)
+   MainSection:NewButton("Infinite Yield", "EXPLOIT HUB", function()
+
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Igor2387/Other/refs/heads/main/IYNEW"))()
+end)
+
+    local Main = Window:NewTab("Settings")
+    local MainSection = Main:NewSection("GUI Settings")
+    MainSection:NewKeybind("Toggle UI", "InfoX", Enum.KeyCode.RightControl, function()
+	Library:ToggleUI()
+end)
+local MainSection = Main:NewSection("Misc Settings")
+MainSection:NewButton("Player Notifications", "notifys join/leave", function()
+
+    if not game:IsLoaded() then
+game.Loaded:Wait()
+end
+game.Players.ChildAdded:Connect(function(player)
+    game:GetService('StarterGui'):SetCore('SendNotification', {
+Title = player.Name,
+Text = 'has joined the server. .\n[AGE: ' ..player.AccountAge.. ']',
+Icon = [[http://www.roblox.com/Thumbs/Avatar.ashx?x=100&y=100&Format=Png&userName=]]..player.Name..[[&RAND]] .. math.random(1,100000000),
+Duration = 5,
+})
+end)
+
+game.Players.ChildRemoved:Connect(function(player)
+    game:GetService('StarterGui'):SetCore('SendNotification', {
+Title = player.Name,
+Text = 'has left the server. .\n[AGE: ' ..player.AccountAge.. ']',
+Icon = [[http://www.roblox.com/Thumbs/Avatar.ashx?x=100&y=100&Format=Png&userName=]]..player.Name..[[&RAND]] .. math.random(1,100000000),
+Duration = 5,
+})
+   end)
+    end)
+MainSection:NewButton("Anti-Mod (Kick)", "antiadmin", function()
+
+
+    local Admins = { -- // user ids
+    [3044717842] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [6321686] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [3059478343] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [21031497] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [1032452236] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [602459233] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [464186719] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [3186052106] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [20180822] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [1891306026] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [7884132] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [3070408] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [6160000] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+local Admins = { -- // user ids
+    [22458161] = true
+}
+game.Players.PlayerAdded:Connect(function(Player)
+    if Admins[Player.UserId] then
+        game.Players.LocalPlayer:Kick("Moderator joined, rejoin at your own risk")
+    end
+end)
+end)
+
+MainSection:NewButton("HD Skybox", "fixing", function()
+
+    --MADE BY OneLegend (NOT THE SCRIPT) REGULAR SCRIPT: JUST RUN!
+s = Instance.new("Sky")
+s.Name = "loltroll"
+s.SkyboxBk = "http://www.roblox.com/asset/?id=149728641"
+s.SkyboxDn = "http://www.roblox.com/asset/?id=149728612"
+s.SkyboxFt = "http://www.roblox.com/asset/?id=149728655"
+s.SkyboxLf = "http://www.roblox.com/asset/?id=149728585"
+s.SkyboxRt = "http://www.roblox.com/asset/?id=149728622"
+s.SkyboxUp = "http://www.roblox.com/asset/?id=149728676"
+s.Parent = game.Lighting
+end)
+MainSection:NewButton("HD Grapics", "antiadmin", function()
+
+
+    _G.BlurSize = 3
+
+_G.ColorCorrectionBrightness = 0.03
+_G.ColorCorrectionContrast = 0.3
+_G.ColorCorrectionSaturation = 0.01
+_G.ColorCorrectionTintColor = Color3.fromRGB(244,244,244)
+
+_G.SunRaysIntensity = 0.2
+_G.SunRaysSpread = 1
+
+-- Lighting settings:
+_G.GlobalShadows = true
+_G.Brightness = 0.9
+_G.GeographicLatitude = 350
+_G.TimeOfDay = 17
+_G.ExposureCompensation = 0.03
+
+
+spawn(function()
+loadstring(game:HttpGet("https://pastebin.com/raw/7n9g57p2"))()
+end)
+end)
+
+-- ending
