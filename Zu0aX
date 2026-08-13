@@ -18,7 +18,7 @@ wait()
  
     -- MAIN
     
-            local Main = Window:NewTab("UPDATED - 11/20/25")
+	            local Main = Window:NewTab("Zu0a X Updated - 8/13/26")
         local MainSection = Main:NewSection("UI Rework, added more loadouts, updated ESP, more")
         local MainSection = Main:NewSection("- COMING SOON -")
         local MainSection = Main:NewSection("Infinite Stamina REWORKED")
@@ -81,7 +81,7 @@ down = false
 velocity = Instance.new("BodyVelocity")
 velocity.maxForce = Vector3.new(100000, 0, 100000)
 ---vv Use that to change the speed v
-local speed = 28
+local speed = 50
 gyro = Instance.new("BodyGyro")
 gyro.maxTorque = Vector3.new(100000, 0, 100000)
 
