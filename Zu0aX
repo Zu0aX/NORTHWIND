@@ -271,40 +271,63 @@ game:GetService("CoreGui").ESP:Destroy()
 end)
 
 
-ESPSection:NewButton("Ore ESP", "Rock ESP", function()
+ESPSection:NewToggle("Ore ESP", "Toggles ore ESP", function(state)
+    if state then
+        _G.OreESP = true
 
+        task.spawn(function()
+            while _G.OreESP do
+                for _, model in ipairs(game:GetDescendants()) do
+                    if not _G.OreESP then
+                        break
+                    end
 
-while true do
-   list = {}
-for i,v in pairs(game:GetDescendants()) do
-   if (v.Name):match("deposit") then
-   BillboardGui = Instance.new("BillboardGui")
-   local Frame = Instance.new("Frame")
-   BillboardGui.Parent = v.Rock
-   BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-   BillboardGui.Active = true
-   BillboardGui.AlwaysOnTop = true
-   BillboardGui.LightInfluence = 1.000
-   BillboardGui.Size = UDim2.new(0, 50, 0, 50)
-   Frame.Parent = BillboardGui
-   Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-   Frame.BackgroundTransparency = 0.2
-   Frame.Size = UDim2.new(0, 2, 0, 2)
-    local c = Instance.new('TextLabel',Frame)
-    c.Size = UDim2.new(2,0,2,0)
-    c.BorderSizePixel = 0
-    c.TextSize = 15
-	c.Font = ("SourceSansLight")
-    c.Text = v.Name
-    c.TextColor3 = Color3.fromRGB(245, 205, 48)
-    v.Rock.BrickColor = BrickColor.new("Bright green")
-    v.Rock.Material = Enum.Material.Neon
-    c.BackgroundTransparency = 1
-    table.insert(list, BillboardGui)
-end
-end
-end
+                    if model:IsA("Model") then
+                        local rock = model:FindFirstChild("Rock")
+
+                        if rock and rock:IsA("MeshPart") then
+                            if not model:FindFirstChild("OreESP") then
+                                local billboard = Instance.new("BillboardGui")
+                                billboard.Name = "OreESP"
+                                billboard.Parent = model
+                                billboard.Adornee = rock
+                                billboard.AlwaysOnTop = true
+                                billboard.LightInfluence = 0
+                                billboard.Size = UDim2.new(0, 180, 0, 25)
+                                billboard.StudsOffset = Vector3.new(0, 2.5, 0)
+
+                                local text = Instance.new("TextLabel")
+                                text.Parent = billboard
+                                text.BackgroundTransparency = 1
+                                text.Size = UDim2.fromScale(1, 1)
+                                text.Font = Enum.Font.Gotham
+                                text.Text = model.Name
+                                text.TextSize = 13
+                                text.TextColor3 = Color3.fromRGB(50, 255, 50)
+                                text.TextStrokeTransparency = 0.35
+                                text.TextStrokeColor3 = Color3.new(0, 0, 0)
+                            end
+                        end
+                    end
+                end
+
+                task.wait(2)
+            end
+        end)
+
+    else
+        _G.OreESP = false
+
+        for _, model in ipairs(game:GetDescendants()) do
+            local esp = model:IsA("Model") and model:FindFirstChild("OreESP")
+
+            if esp then
+                esp:Destroy()
+            end
+        end
+    end
 end)
+
 ESPSection:NewButton("Gem ESP", "Rock ESP", function()
 
 
