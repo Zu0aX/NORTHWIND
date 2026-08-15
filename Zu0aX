@@ -1,10 +1,11 @@
 --====================================
 -- ZU0A+ NORTHWIND INTRO
+-- FINAL VERSION
 --====================================
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
-local SoundService = game:GetService("SoundService")
+local ContentProvider = game:GetService("ContentProvider")
 local CoreGui = game:GetService("CoreGui")
 
 
@@ -38,19 +39,26 @@ Gui.Parent =
 
 
 
+
+
+--====================================
 -- BACKGROUND
+--====================================
 
 local Background =
     Instance.new("Frame")
 
+
 Background.Parent =
     Gui
+
 
 Background.Size =
     UDim2.fromScale(
         1,
         1
     )
+
 
 Background.BackgroundColor3 =
     Color3.fromRGB(
@@ -59,15 +67,19 @@ Background.BackgroundColor3 =
         3
     )
 
+
 Background.BackgroundTransparency =
-    0.15
+    .15
 
 
 
 
 
 
--- MAIN TITLE
+
+--====================================
+-- TITLE
+--====================================
 
 local Title =
     Instance.new("TextLabel")
@@ -107,7 +119,7 @@ Title.Text =
 
 
 Title.Font =
-    Enum.Font.GothamBlack
+Enum.Font.Code
 
 
 Title.TextSize =
@@ -123,7 +135,15 @@ Title.TextColor3 =
 
 
 Title.TextStrokeTransparency =
-    1
+    .1
+
+
+Title.TextStrokeColor3 =
+    Color3.fromRGB(
+        0,
+        0,
+        0
+    )
 
 
 Title.TextTransparency =
@@ -133,8 +153,40 @@ Title.TextTransparency =
 
 
 
+-- TITLE GLOW
 
--- WELCOME TEXT
+local TitleGlow =
+    Instance.new("UIStroke")
+
+
+TitleGlow.Parent =
+    Title
+
+
+TitleGlow.Thickness =
+    2
+
+
+TitleGlow.Color =
+    Color3.fromRGB(
+        255,
+        40,
+        0
+    )
+
+
+TitleGlow.Transparency =
+    .2
+
+
+
+
+
+
+
+--====================================
+-- WELCOME
+--====================================
 
 local Welcome =
     Instance.new("TextLabel")
@@ -174,7 +226,6 @@ Welcome.Text =
     .. player.Name
 
 
-
 Welcome.Font =
     Enum.Font.GothamBold
 
@@ -200,7 +251,9 @@ Welcome.TextTransparency =
 
 
 
--- LOADING
+--====================================
+-- LOADING TEXT
+--====================================
 
 local Loading =
     Instance.new("TextLabel")
@@ -263,8 +316,9 @@ Loading.TextTransparency =
 
 
 
+
 --====================================
--- FUTURISTIC SYMBOLS
+-- SYMBOLS
 --====================================
 
 local Symbols = {}
@@ -285,7 +339,7 @@ local SymbolList = {
 
 
 
-for i, symbol in ipairs(SymbolList) do
+for _,symbol in ipairs(SymbolList) do
 
 
     local obj =
@@ -343,7 +397,6 @@ for i, symbol in ipairs(SymbolList) do
         obj
     )
 
-
 end
 
 
@@ -352,14 +405,510 @@ end
 
 
 
--- DING
+--====================================
+-- ENERGY RINGS SETUP
+--====================================
+
+local EnergyRings = {}
+
+
+
+local function createRing(
+    width,
+    height,
+    speed,
+    direction,
+    thickness
+)
+
+
+    local ring =
+        Instance.new("Frame")
+
+
+    ring.Parent =
+        Background
+
+
+    ring.AnchorPoint =
+        Vector2.new(
+            .5,
+            .5
+        )
+
+
+    ring.Position =
+        UDim2.fromScale(
+            .5,
+            .47
+        )
+
+
+    ring.Size =
+        UDim2.fromOffset(
+            width,
+            height
+        )
+
+
+    ring.BackgroundTransparency =
+        1
+
+
+
+    local corner =
+        Instance.new("UICorner")
+
+
+    corner.CornerRadius =
+        UDim.new(
+            1,
+            0
+        )
+
+
+    corner.Parent =
+        ring
+
+
+
+
+    local stroke =
+        Instance.new("UIStroke")
+
+
+    stroke.Parent =
+        ring
+
+
+    stroke.Thickness =
+        thickness
+
+
+    stroke.Color =
+        Color3.fromRGB(
+            255,
+            50,
+            0
+        )
+
+
+    stroke.Transparency =
+        .15
+
+
+
+    table.insert(
+        EnergyRings,
+        {
+            Frame = ring,
+            Stroke = stroke,
+            Speed = speed,
+            Direction = direction
+        }
+    )
+
+end
+
+
+
+createRing(1250,480,.15,1,4)
+
+createRing(1150,420,.3,-1,3)
+
+createRing(1000,350,.5,1,2)
+
+createRing(850,300,.8,-1,2)
+--====================================
+-- ENERGY RING ANIMATION
+--====================================
+
+task.spawn(function()
+
+
+    local rotation = 0
+
+
+    while Gui.Parent do
+
+
+        rotation += 1
+
+
+
+        local pulse =
+            (math.sin(
+                tick()*4
+            ) + 1) / 2
+
+
+
+
+        for _,ring in ipairs(
+            EnergyRings
+        ) do
+
+
+
+            ring.Frame.Rotation =
+                rotation *
+                ring.Direction *
+                ring.Speed
+
+
+
+            local heat =
+                60 +
+                (pulse * 190)
+
+
+
+            ring.Stroke.Color =
+                Color3.fromRGB(
+                    255,
+                    heat,
+                    0
+                )
+
+
+
+            ring.Stroke.Transparency =
+                .35 -
+                (pulse*.25)
+
+
+
+            ring.Stroke.Thickness =
+                2 +
+                pulse*3
+
+
+        end
+
+
+
+        task.wait()
+
+    end
+
+
+end)
+
+
+
+
+
+
+
+
+--====================================
+-- MOVING LASER POINT
+--====================================
+
+local Scanner =
+    Instance.new("Frame")
+
+
+Scanner.Parent =
+    Background
+
+
+Scanner.AnchorPoint =
+    Vector2.new(
+        .5,
+        .5
+    )
+
+
+Scanner.Size =
+    UDim2.fromOffset(
+        18,
+        18
+    )
+
+
+Scanner.BackgroundColor3 =
+    Color3.fromRGB(
+        255,
+        255,
+        180
+    )
+
+
+Scanner.Position =
+    UDim2.fromScale(
+        .5,
+        .47
+    )
+
+
+local ScannerCorner =
+    Instance.new("UICorner")
+
+
+ScannerCorner.CornerRadius =
+    UDim.new(
+        1,
+        0
+    )
+
+
+ScannerCorner.Parent =
+    Scanner
+
+
+
+local ScannerGlow =
+    Instance.new("UIStroke")
+
+
+ScannerGlow.Parent =
+    Scanner
+
+
+ScannerGlow.Thickness =
+    8
+
+
+ScannerGlow.Color =
+    Color3.fromRGB(
+        255,
+        100,
+        0
+    )
+
+
+
+
+
+task.spawn(function()
+
+
+    local angle = 0
+
+
+    while Gui.Parent do
+
+
+        angle += .025
+
+
+
+        Scanner.Position =
+            UDim2.fromScale(
+                .5 +
+                math.cos(angle)
+                *.62,
+
+                .47 +
+                math.sin(angle)
+                *.23
+            )
+
+
+
+        local pulse =
+            math.abs(
+                math.sin(
+                    tick()*6
+                )
+            )
+
+
+
+        Scanner.BackgroundColor3 =
+            Color3.fromRGB(
+                255,
+                120 +
+                pulse*120,
+                0
+            )
+
+
+
+        ScannerGlow.Transparency =
+            pulse*.4
+
+
+
+        task.wait()
+
+    end
+
+
+end)
+
+
+
+
+
+
+
+
+
+--====================================
+-- ELECTRIC SPARKS
+--====================================
+
+local SparkList = {
+
+    "⚡",
+    "✦",
+    "✧",
+    "◈"
+
+}
+
+
+
+task.spawn(function()
+
+
+    while Gui.Parent do
+
+
+
+        local spark =
+            Instance.new("TextLabel")
+
+
+
+        spark.Parent =
+            Background
+
+
+        spark.BackgroundTransparency =
+            1
+
+
+
+        spark.Text =
+            SparkList[
+                math.random(
+                    1,
+                    #SparkList
+                )
+            ]
+
+
+
+        spark.Font =
+            Enum.Font.GothamBlack
+
+
+
+        spark.TextSize =
+            math.random(
+                20,
+                40
+            )
+
+
+
+        spark.TextColor3 =
+            Color3.fromRGB(
+                255,
+                math.random(
+                    80,
+                    230
+                ),
+                0
+            )
+
+
+
+        spark.AnchorPoint =
+            Vector2.new(
+                .5,
+                .5
+            )
+
+
+
+        local locations = {
+
+            UDim2.fromScale(.2,.35),
+            UDim2.fromScale(.8,.35),
+            UDim2.fromScale(.2,.60),
+            UDim2.fromScale(.8,.60)
+
+        }
+
+
+
+        spark.Position =
+            locations[
+                math.random(
+                    1,
+                    #locations
+                )
+            ]
+
+
+
+        TweenService:Create(
+            spark,
+            TweenInfo.new(
+                .45
+            ),
+            {
+                TextTransparency = 1,
+                Rotation = math.random(
+                    -180,
+                    180
+                ),
+                Size =
+                    UDim2.fromOffset(
+                        5,
+                        5
+                    )
+            }
+        ):Play()
+
+
+
+        task.delay(
+            .5,
+            function()
+
+                spark:Destroy()
+
+            end
+        )
+
+
+
+        task.wait(
+            math.random(
+                2,
+                5
+            )/10
+        )
+
+
+    end
+
+
+end)
+
+
+
+
+
+
+
+
+
+--====================================
+-- DING SOUND FIX
+--====================================
 
 local Ding =
     Instance.new("Sound")
 
 
 Ding.Parent =
-    SoundService
+    Gui
 
 
 Ding.SoundId =
@@ -367,7 +916,29 @@ Ding.SoundId =
 
 
 Ding.Volume =
-    1
+    2
+
+
+Ding.PlayOnRemove =
+    false
+
+
+
+task.spawn(function()
+
+
+    pcall(function()
+
+        ContentProvider:PreloadAsync(
+            {
+                Ding
+            }
+        )
+
+    end)
+
+
+end)
 
 
 
@@ -375,7 +946,86 @@ Ding.Volume =
 
 
 
--- ENTRANCE
+
+--====================================
+-- TITLE GLOW ANIMATION
+--====================================
+
+task.spawn(function()
+
+
+    while Gui.Parent do
+
+
+        for i = 0,1,.02 do
+
+
+            local color =
+                Color3.fromRGB(
+                    255,
+                    40 + (215*i),
+                    0
+                )
+
+
+
+            Title.TextColor3 =
+                color
+
+
+            TitleGlow.Color =
+                color
+
+
+
+            task.wait(
+                .03
+            )
+
+
+        end
+
+
+
+
+
+        for i = 1,0,-.02 do
+
+
+            local color =
+                Color3.fromRGB(
+                    255,
+                    40 + (215*i),
+                    0
+                )
+
+
+
+            Title.TextColor3 =
+                color
+
+
+            TitleGlow.Color =
+                color
+
+
+
+            task.wait(
+                .03
+            )
+
+
+        end
+
+
+    end
+
+
+end)
+--====================================
+-- ENTRANCE ANIMATION
+--====================================
+
 
 TweenService:Create(
     Title,
@@ -384,10 +1034,10 @@ TweenService:Create(
         Enum.EasingStyle.Back,
         Enum.EasingDirection.Out
     ),
-    {
-        TextTransparency = 0,
-        TextStrokeTransparency = .4
-    }
+{
+    TextTransparency = 0,
+    TextStrokeTransparency = .25
+}
 ):Play()
 
 
@@ -418,65 +1068,11 @@ TweenService:Create(
 
 task.wait(1)
 
+
+
+-- PLAY DING
+
 Ding:Play()
-
-
-
-
-
-
-
---====================================
--- TITLE COLOR ANIMATION
---====================================
-
-task.spawn(function()
-
-
-    while Gui.Parent do
-
-
-        for i = 0,1,.02 do
-
-
-            Title.TextColor3 =
-                Color3.fromRGB(
-                    255,
-                    50 + (205*i),
-                    0
-                )
-
-
-            task.wait(.03)
-
-
-        end
-
-
-
-
-        for i = 1,0,-.02 do
-
-
-            Title.TextColor3 =
-                Color3.fromRGB(
-                    255,
-                    50 + (205*i),
-                    0
-                )
-
-
-            task.wait(.03)
-
-
-        end
-
-
-    end
-
-
-end)
-
 
 
 
@@ -494,13 +1090,18 @@ task.spawn(function()
     local rotation = 0
 
 
+
     while Gui.Parent do
 
 
         rotation += .015
 
 
-        for i,obj in ipairs(Symbols) do
+
+        for i,obj in ipairs(
+            Symbols
+        ) do
+
 
 
             local angle =
@@ -511,29 +1112,36 @@ task.spawn(function()
 
 
 
+
             obj.Position =
                 UDim2.fromScale(
                     .5 +
-                    math.cos(angle)*.36,
+                    math.cos(angle)
+                    *.36,
 
                     .48 +
-                    math.sin(angle)*.25
+                    math.sin(angle)
+                    *.25
                 )
+
 
 
             obj.Rotation += 1
 
 
+
         end
 
 
-        task.wait()
 
+        task.wait()
 
     end
 
 
 end)
+
+
 
 
 
@@ -550,11 +1158,14 @@ task.spawn(function()
 
     local dots = ""
 
-    local startTime = tick()
+
+    local startTime =
+        tick()
 
 
 
     while Gui.Parent do
+
 
 
         dots =
@@ -571,7 +1182,9 @@ task.spawn(function()
 
 
 
+
         if tick() - startTime < 4 then
+
 
 
             Loading.Text =
@@ -580,7 +1193,9 @@ task.spawn(function()
 
 
 
+
         else
+
 
 
             Loading.Text =
@@ -589,12 +1204,15 @@ task.spawn(function()
 
 
 
+
         end
 
 
 
 
-        task.wait(.45)
+        task.wait(
+            .45
+        )
 
 
     end
@@ -609,9 +1227,14 @@ end)
 
 
 
--- LONGER INTRO
 
-task.wait(8)
+--====================================
+-- INTRO LENGTH
+--====================================
+
+task.wait(
+    8
+)
 
 
 
@@ -619,21 +1242,47 @@ task.wait(8)
 
 
 
+
+
+--====================================
 -- FADE OUT
+--====================================
+
 
 for _,v in ipairs(
     Background:GetDescendants()
 ) do
 
 
+
     if v:IsA("TextLabel") then
+
 
 
         TweenService:Create(
             v,
-            TweenInfo.new(1),
+            TweenInfo.new(
+                1
+            ),
             {
                 TextTransparency = 1
+            }
+        ):Play()
+
+
+
+
+    elseif v:IsA("Frame") then
+
+
+
+        TweenService:Create(
+            v,
+            TweenInfo.new(
+                1
+            ),
+            {
+                BackgroundTransparency = 1
             }
         ):Play()
 
@@ -642,13 +1291,19 @@ for _,v in ipairs(
     end
 
 
+
 end
+
+
+
 
 
 
 TweenService:Create(
     Background,
-    TweenInfo.new(1),
+    TweenInfo.new(
+        1
+    ),
     {
         BackgroundTransparency = 1
     }
@@ -656,11 +1311,19 @@ TweenService:Create(
 
 
 
-task.wait(1)
+task.wait(
+    1
+)
 
 
 
 Gui:Destroy()
+
+
+task.spawn(function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/CreatorLaunch"))()
+end)
+
 
 
 
@@ -910,7 +1573,8 @@ end)
 
 local Main = Window:NewTab("ESPs")
         local ESPSection = Main:NewSection("All ESPs")
-        ESPSection:NewToggle("Character ESP", "Shows character info, titles, and health", function(state)
+ 
+ESPSection:NewToggle("Character ESP", "Shows character info, titles, and health", function(state)
 
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local Characters = workspace:WaitForChild("Characters")
@@ -1068,7 +1732,16 @@ local Main = Window:NewTab("ESPs")
 
             if text and text:IsA("TextLabel") then
 
-                return text.Text
+
+                if text.Text ~= ""
+                    and text.Text ~= "Label" then
+
+
+                    return text.Text
+
+
+                end
+
 
             end
 
@@ -1193,11 +1866,15 @@ local Main = Window:NewTab("ESPs")
 
 
 
-            local function makeLabel()
+            local function makeLabel(labelName)
 
 
                 local label =
                     Instance.new("TextLabel")
+
+
+                label.Name =
+                    labelName
 
 
                 label.Parent =
@@ -1257,24 +1934,19 @@ local Main = Window:NewTab("ESPs")
 
 
             local nobelLabel =
-                makeLabel()
+                makeLabel("NobelLabel")
 
 
             local nameLabel =
-                makeLabel()
+                makeLabel("NameLabel")
 
 
             local titleLabel =
-                makeLabel()
+                makeLabel("TitleLabel")
 
 
             local healthLabel =
-                makeLabel()
-
-
-
-
-
+                makeLabel("HealthLabel")
             task.spawn(function()
 
 
@@ -1554,6 +2226,180 @@ local Main = Window:NewTab("ESPs")
 
 
 
+
+        --====================================
+        -- CONSTANT TEXT SCANNER
+        -- ONLY UPDATES TEXT
+        -- DOES NOT TOUCH HEALTH
+        --====================================
+
+        task.spawn(function()
+
+
+            while state do
+
+
+                task.wait(
+                    1
+                )
+
+
+
+                for _, character in ipairs(
+                    Characters:GetChildren()
+                ) do
+
+
+
+                    local root =
+                        character:FindFirstChild(
+                            "HumanoidRootPart"
+                        )
+
+
+
+                    if root then
+
+
+                        local billboard =
+                            root:FindFirstChild(
+                                "CharacterESP"
+                            )
+
+
+                        if billboard then
+
+
+
+                            local nameLabel =
+                                billboard:FindFirstChild(
+                                    "NameLabel"
+                                )
+
+
+                            local titleLabel =
+                                billboard:FindFirstChild(
+                                    "TitleLabel"
+                                )
+
+
+                            local nobelLabel =
+                                billboard:FindFirstChild(
+                                    "NobelLabel"
+                                )
+
+
+
+                            local playerName =
+                                getText(
+                                    character,
+                                    "PlayerName"
+                                )
+
+
+
+                            local title =
+                                getText(
+                                    character,
+                                    "Title"
+                                )
+
+
+
+                            local nobel =
+                                getText(
+                                    character,
+                                    "NobelTitle"
+                                )
+
+
+
+
+                            if playerName
+                                and nameLabel then
+
+
+                                nameLabel.Text =
+                                    playerName
+
+
+                                nameLabel.Visible =
+                                    true
+
+
+                            end
+
+
+
+
+
+                            if titleLabel then
+
+
+                                if title
+                                    and title ~= "" then
+
+
+                                    titleLabel.Text =
+                                        title
+
+
+                                    titleLabel.Visible =
+                                        true
+
+
+                                end
+
+
+                            end
+
+
+
+
+
+                            if nobelLabel then
+
+
+                                if nobel
+                                    and nobel ~= "" then
+
+
+                                    nobelLabel.Text =
+                                        nobel
+
+
+                                    nobelLabel.Visible =
+                                        true
+
+
+                                end
+
+
+                            end
+
+
+
+                        end
+
+
+                    end
+
+
+                end
+
+
+            end
+
+
+        end)
+
+
+
+
+
+
+
+
     else
 
 
@@ -1607,7 +2453,9 @@ local Main = Window:NewTab("ESPs")
 
 
                 if esp then
+
                     esp:Destroy()
+
                 end
 
 
@@ -1637,7 +2485,6 @@ local Main = Window:NewTab("ESPs")
     end
 
 end)
-
  ESPSection:NewToggle("Player ESP", "ToggleInfo", function(state)
     if state then
 
