@@ -1,4 +1,673 @@
--- main source
+--====================================
+-- ZU0A+ NORTHWIND INTRO
+--====================================
+
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local SoundService = game:GetService("SoundService")
+local CoreGui = game:GetService("CoreGui")
+
+
+if CoreGui:FindFirstChild("NorthwindIntro") then
+    CoreGui.NorthwindIntro:Destroy()
+end
+
+
+
+local player =
+    Players.LocalPlayer
+
+
+
+local Gui =
+    Instance.new("ScreenGui")
+
+Gui.Name =
+    "NorthwindIntro"
+
+Gui.IgnoreGuiInset =
+    true
+
+Gui.ResetOnSpawn =
+    false
+
+Gui.Parent =
+    CoreGui
+
+
+
+
+
+-- BACKGROUND
+
+local Background =
+    Instance.new("Frame")
+
+Background.Parent =
+    Gui
+
+Background.Size =
+    UDim2.fromScale(
+        1,
+        1
+    )
+
+Background.BackgroundColor3 =
+    Color3.fromRGB(
+        5,
+        3,
+        3
+    )
+
+Background.BackgroundTransparency =
+    0.15
+
+
+
+
+
+
+-- MAIN TITLE
+
+local Title =
+    Instance.new("TextLabel")
+
+
+Title.Parent =
+    Background
+
+
+Title.AnchorPoint =
+    Vector2.new(
+        .5,
+        .5
+    )
+
+
+Title.Position =
+    UDim2.fromScale(
+        .5,
+        .43
+    )
+
+
+Title.Size =
+    UDim2.fromOffset(
+        1100,
+        120
+    )
+
+
+Title.BackgroundTransparency =
+    1
+
+
+Title.Text =
+    "Zu0aX+ NORTHWIND"
+
+
+Title.Font =
+    Enum.Font.GothamBlack
+
+
+Title.TextSize =
+    85
+
+
+Title.TextColor3 =
+    Color3.fromRGB(
+        255,
+        80,
+        20
+    )
+
+
+Title.TextStrokeTransparency =
+    1
+
+
+Title.TextTransparency =
+    1
+
+
+
+
+
+
+-- WELCOME TEXT
+
+local Welcome =
+    Instance.new("TextLabel")
+
+
+Welcome.Parent =
+    Background
+
+
+Welcome.AnchorPoint =
+    Vector2.new(
+        .5,
+        .5
+    )
+
+
+Welcome.Position =
+    UDim2.fromScale(
+        .5,
+        .53
+    )
+
+
+Welcome.Size =
+    UDim2.fromOffset(
+        700,
+        50
+    )
+
+
+Welcome.BackgroundTransparency =
+    1
+
+
+Welcome.Text =
+    "Welcome "
+    .. player.Name
+
+
+
+Welcome.Font =
+    Enum.Font.GothamBold
+
+
+Welcome.TextSize =
+    35
+
+
+Welcome.TextColor3 =
+    Color3.fromRGB(
+        230,
+        230,
+        230
+    )
+
+
+Welcome.TextTransparency =
+    1
+
+
+
+
+
+
+
+-- LOADING
+
+local Loading =
+    Instance.new("TextLabel")
+
+
+Loading.Parent =
+    Background
+
+
+Loading.AnchorPoint =
+    Vector2.new(
+        .5,
+        .5
+    )
+
+
+Loading.Position =
+    UDim2.fromScale(
+        .5,
+        .60
+    )
+
+
+Loading.Size =
+    UDim2.fromOffset(
+        600,
+        40
+    )
+
+
+Loading.BackgroundTransparency =
+    1
+
+
+Loading.Text =
+    "Initializing NORTHWIND"
+
+
+Loading.Font =
+    Enum.Font.Gotham
+
+
+Loading.TextSize =
+    20
+
+
+Loading.TextColor3 =
+    Color3.fromRGB(
+        255,
+        160,
+        40
+    )
+
+
+Loading.TextTransparency =
+    1
+
+
+
+
+
+
+--====================================
+-- FUTURISTIC SYMBOLS
+--====================================
+
+local Symbols = {}
+
+
+local SymbolList = {
+
+    "◈",
+    "◇",
+    "△",
+    "✦",
+    "⬢",
+    "⟐",
+    "◉"
+
+}
+
+
+
+
+for i, symbol in ipairs(SymbolList) do
+
+
+    local obj =
+        Instance.new("TextLabel")
+
+
+    obj.Parent =
+        Background
+
+
+    obj.BackgroundTransparency =
+        1
+
+
+    obj.Text =
+        symbol
+
+
+    obj.Font =
+        Enum.Font.GothamBlack
+
+
+    obj.TextSize =
+        38
+
+
+    obj.TextColor3 =
+        Color3.fromRGB(
+            255,
+            120,
+            20
+        )
+
+
+    obj.TextTransparency =
+        .15
+
+
+    obj.Size =
+        UDim2.fromOffset(
+            50,
+            50
+        )
+
+
+    obj.AnchorPoint =
+        Vector2.new(
+            .5,
+            .5
+        )
+
+
+    table.insert(
+        Symbols,
+        obj
+    )
+
+
+end
+
+
+
+
+
+
+
+-- DING
+
+local Ding =
+    Instance.new("Sound")
+
+
+Ding.Parent =
+    SoundService
+
+
+Ding.SoundId =
+    "rbxassetid://9118828561"
+
+
+Ding.Volume =
+    1
+
+
+
+
+
+
+
+-- ENTRANCE
+
+TweenService:Create(
+    Title,
+    TweenInfo.new(
+        1,
+        Enum.EasingStyle.Back,
+        Enum.EasingDirection.Out
+    ),
+    {
+        TextTransparency = 0,
+        TextStrokeTransparency = .4
+    }
+):Play()
+
+
+
+TweenService:Create(
+    Welcome,
+    TweenInfo.new(
+        1
+    ),
+    {
+        TextTransparency = 0
+    }
+):Play()
+
+
+
+TweenService:Create(
+    Loading,
+    TweenInfo.new(
+        1
+    ),
+    {
+        TextTransparency = 0
+    }
+):Play()
+
+
+
+task.wait(1)
+
+Ding:Play()
+
+
+
+
+
+
+
+--====================================
+-- TITLE COLOR ANIMATION
+--====================================
+
+task.spawn(function()
+
+
+    while Gui.Parent do
+
+
+        for i = 0,1,.02 do
+
+
+            Title.TextColor3 =
+                Color3.fromRGB(
+                    255,
+                    50 + (205*i),
+                    0
+                )
+
+
+            task.wait(.03)
+
+
+        end
+
+
+
+
+        for i = 1,0,-.02 do
+
+
+            Title.TextColor3 =
+                Color3.fromRGB(
+                    255,
+                    50 + (205*i),
+                    0
+                )
+
+
+            task.wait(.03)
+
+
+        end
+
+
+    end
+
+
+end)
+
+
+
+
+
+
+
+
+--====================================
+-- SYMBOL ORBIT
+--====================================
+
+task.spawn(function()
+
+
+    local rotation = 0
+
+
+    while Gui.Parent do
+
+
+        rotation += .015
+
+
+        for i,obj in ipairs(Symbols) do
+
+
+            local angle =
+                rotation
+                +
+                ((i/#Symbols)
+                * math.pi * 2)
+
+
+
+            obj.Position =
+                UDim2.fromScale(
+                    .5 +
+                    math.cos(angle)*.36,
+
+                    .48 +
+                    math.sin(angle)*.25
+                )
+
+
+            obj.Rotation += 1
+
+
+        end
+
+
+        task.wait()
+
+
+    end
+
+
+end)
+
+
+
+
+
+
+
+--====================================
+-- LOADING STATUS
+--====================================
+
+task.spawn(function()
+
+
+    local dots = ""
+
+    local startTime = tick()
+
+
+
+    while Gui.Parent do
+
+
+        dots =
+            dots .. "."
+
+
+
+        if #dots > 3 then
+
+            dots = ""
+
+        end
+
+
+
+
+        if tick() - startTime < 4 then
+
+
+            Loading.Text =
+                "Initializing NORTHWIND"
+                .. dots
+
+
+
+        else
+
+
+            Loading.Text =
+                "Checking for Moderators"
+                .. dots
+
+
+
+        end
+
+
+
+
+        task.wait(.45)
+
+
+    end
+
+
+end)
+
+
+
+
+
+
+
+
+-- LONGER INTRO
+
+task.wait(8)
+
+
+
+
+
+
+
+-- FADE OUT
+
+for _,v in ipairs(
+    Background:GetDescendants()
+) do
+
+
+    if v:IsA("TextLabel") then
+
+
+        TweenService:Create(
+            v,
+            TweenInfo.new(1),
+            {
+                TextTransparency = 1
+            }
+        ):Play()
+
+
+
+    end
+
+
+end
+
+
+
+TweenService:Create(
+    Background,
+    TweenInfo.new(1),
+    {
+        BackgroundTransparency = 1
+    }
+):Play()
+
+
+
+task.wait(1)
+
+
+
+Gui:Destroy()
+
+
+
+--====================================
+-- MAIN GUI SCRIPT STARTS BELOW
+--====================================
+
 wait()
 game:service"NetworkClient".ChildRemoved:Connect(function()
        game:service"TeleportService":Teleport(game.PlaceId);
@@ -241,6 +910,734 @@ end)
 
 local Main = Window:NewTab("ESPs")
         local ESPSection = Main:NewSection("All ESPs")
+        ESPSection:NewToggle("Character ESP", "Shows character info, titles, and health", function(state)
+
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local Characters = workspace:WaitForChild("Characters")
+
+    local HealthData = {}
+
+
+
+    if state then
+
+
+
+        --====================================
+        -- HEALTH EVENT
+        --====================================
+
+        local HealthEvent =
+            ReplicatedStorage
+            .DefinEvents
+            .InstancePropertyFunction
+
+
+
+        _G.HealthConnection =
+            HealthEvent.OnClientEvent:Connect(function(player, property, value)
+
+
+                if property == "Health"
+                    and typeof(value) == "number"
+                    and player:IsA("Player") then
+
+
+                    HealthData[player] = value
+
+
+                end
+
+
+            end)
+
+
+
+
+
+
+        local function getHealth(character)
+
+
+            for player, health in pairs(HealthData) do
+
+
+                if player.Character == character then
+
+                    return health
+
+                end
+
+
+            end
+
+
+            return nil
+
+
+        end
+
+
+
+
+
+
+        local function getHealthColor(percent)
+
+
+            percent =
+                math.clamp(
+                    percent,
+                    0,
+                    100
+                )
+
+
+            if percent >= 50 then
+
+
+                local t =
+                    (100 - percent) / 50
+
+
+                return Color3.fromRGB(
+                    255 * t,
+                    255,
+                    0
+                )
+
+
+            else
+
+
+                local t =
+                    percent / 50
+
+
+                return Color3.fromRGB(
+                    255,
+                    255 * t,
+                    0
+                )
+
+
+            end
+
+
+        end
+
+
+
+
+
+
+        local function getText(character, folderName)
+
+
+            local identification =
+                character:FindFirstChild(
+                    "Identification",
+                    true
+                )
+
+
+            if not identification then
+                return nil
+            end
+
+
+
+            local folder =
+                identification:FindFirstChild(
+                    folderName
+                )
+
+
+            if not folder then
+                return nil
+            end
+
+
+
+            local text =
+                folder:FindFirstChild(
+                    "TextGui",
+                    true
+                )
+
+
+            if text and text:IsA("TextLabel") then
+
+                return text.Text
+
+            end
+
+
+            return nil
+
+        end
+
+
+
+
+
+
+        local function createESP(character)
+
+
+            if not character:IsA("Model") then
+                return
+            end
+
+
+
+            local root =
+                character:FindFirstChild(
+                    "HumanoidRootPart"
+                )
+
+
+            if not root then
+                return
+            end
+
+
+
+            if root:FindFirstChild(
+                "CharacterESP"
+            ) then
+                return
+            end
+
+
+
+
+
+
+            -- CHAMS
+
+            local highlight =
+                Instance.new("Highlight")
+
+
+            highlight.Name =
+                "CharacterESP"
+
+
+            highlight.Parent =
+                character
+
+
+            highlight.FillTransparency =
+                0.65
+
+
+            highlight.FillColor =
+                Color3.fromRGB(
+                    0,
+                    255,
+                    0
+                )
+
+
+            highlight.OutlineColor =
+                Color3.fromRGB(
+                    255,
+                    255,
+                    255
+                )
+
+
+
+
+
+
+
+
+            local billboard =
+                Instance.new("BillboardGui")
+
+
+            billboard.Name =
+                "CharacterESP"
+
+
+            billboard.Parent =
+                root
+
+
+            billboard.Adornee =
+                root
+
+
+            billboard.AlwaysOnTop =
+                true
+
+
+            billboard.Size =
+                UDim2.fromOffset(
+                    200,
+                    100
+                )
+
+
+            billboard.StudsOffset =
+                Vector3.new(
+                    0,
+                    5,
+                    0
+                )
+
+
+
+
+
+
+            local function makeLabel()
+
+
+                local label =
+                    Instance.new("TextLabel")
+
+
+                label.Parent =
+                    billboard
+
+
+                label.Size =
+                    UDim2.fromOffset(
+                        200,
+                        18
+                    )
+
+
+                label.BackgroundTransparency =
+                    1
+
+
+                label.TextColor3 =
+                    Color3.fromRGB(
+                        255,
+                        255,
+                        255
+                    )
+
+
+                label.TextStrokeTransparency =
+                    0
+
+
+                label.TextStrokeColor3 =
+                    Color3.fromRGB(
+                        0,
+                        0,
+                        0
+                    )
+
+
+                label.Font =
+                    Enum.Font.GothamBold
+
+
+                label.TextSize =
+                    12
+
+
+                label.Visible =
+                    false
+
+
+                return label
+
+            end
+
+
+
+
+
+
+            local nobelLabel =
+                makeLabel()
+
+
+            local nameLabel =
+                makeLabel()
+
+
+            local titleLabel =
+                makeLabel()
+
+
+            local healthLabel =
+                makeLabel()
+
+
+
+
+
+            task.spawn(function()
+
+
+
+                task.wait(1)
+
+
+
+                while state
+                    and character.Parent == Characters
+                    and billboard.Parent do
+
+
+
+
+
+                    local playerName =
+                        getText(
+                            character,
+                            "PlayerName"
+                        )
+                        or character.Name
+
+
+
+
+                    local title =
+                        getText(
+                            character,
+                            "Title"
+                        )
+
+
+
+                    local nobel =
+                        getText(
+                            character,
+                            "NobelTitle"
+                        )
+
+
+
+                    local hp =
+                        getHealth(
+                            character
+                        )
+
+
+
+                    local y = 0
+
+
+
+
+
+                    -- NOBEL TITLE
+
+                    if nobel
+                        and nobel ~= "" then
+
+
+                        nobelLabel.Position =
+                            UDim2.fromOffset(
+                                0,
+                                y
+                            )
+
+
+                        nobelLabel.Text =
+                            nobel
+
+
+                        nobelLabel.Visible =
+                            true
+
+
+                        y += 18
+
+
+                    else
+
+
+                        nobelLabel.Visible =
+                            false
+
+
+                    end
+
+
+
+
+
+
+                    -- NAME
+
+                    nameLabel.Position =
+                        UDim2.fromOffset(
+                            0,
+                            y
+                        )
+
+
+                    nameLabel.Text =
+                        playerName
+
+
+                    nameLabel.Visible =
+                        true
+
+
+                    y += 18
+
+
+
+
+
+
+                    -- TITLE
+
+                    if title
+                        and title ~= "" then
+
+
+                        titleLabel.Position =
+                            UDim2.fromOffset(
+                                0,
+                                y
+                            )
+
+
+                        titleLabel.Text =
+                            title
+
+
+                        titleLabel.Visible =
+                            true
+
+
+                        y += 18
+
+
+                    else
+
+
+                        titleLabel.Visible =
+                            false
+
+
+                    end
+
+
+
+
+
+
+                    -- HEALTH
+
+                    healthLabel.Position =
+                        UDim2.fromOffset(
+                            0,
+                            y
+                        )
+
+
+                    if hp then
+
+
+                        hp =
+                            math.clamp(
+                                hp,
+                                0,
+                                100
+                            )
+
+
+
+                        local color =
+                            getHealthColor(
+                                hp
+                            )
+
+
+
+                        healthLabel.Text =
+                            math.floor(hp)
+                            .. "%"
+
+
+
+                        healthLabel.TextColor3 =
+                            color
+
+
+
+                        highlight.FillColor =
+                            color
+
+
+
+                    else
+
+
+                        healthLabel.Text =
+                            "Loading..."
+
+
+                        healthLabel.TextColor3 =
+                            Color3.fromRGB(
+                                255,
+                                255,
+                                255
+                            )
+
+
+                    end
+
+
+
+                    healthLabel.Visible =
+                        true
+
+
+
+
+                    task.wait(
+                        0.1
+                    )
+
+
+                end
+
+
+            end)
+
+
+
+        end
+
+
+
+
+
+
+        for _, character in ipairs(
+            Characters:GetChildren()
+        ) do
+
+            createESP(character)
+
+        end
+
+
+
+
+
+
+        _G.CharacterESPConnection =
+            Characters.ChildAdded:Connect(function(character)
+
+
+                task.wait(
+                    0.2
+                )
+
+
+                if state then
+
+                    createESP(character)
+
+                end
+
+
+            end)
+
+
+
+
+
+
+    else
+
+
+
+
+        if _G.HealthConnection then
+
+            _G.HealthConnection:Disconnect()
+
+            _G.HealthConnection = nil
+
+        end
+
+
+
+
+
+        if _G.CharacterESPConnection then
+
+            _G.CharacterESPConnection:Disconnect()
+
+            _G.CharacterESPConnection = nil
+
+        end
+
+
+
+
+
+
+        for _, character in ipairs(
+            Characters:GetChildren()
+        ) do
+
+
+
+            local root =
+                character:FindFirstChild(
+                    "HumanoidRootPart"
+                )
+
+
+
+            if root then
+
+
+                local esp =
+                    root:FindFirstChild(
+                        "CharacterESP"
+                    )
+
+
+                if esp then
+                    esp:Destroy()
+                end
+
+
+            end
+
+
+
+
+
+            local highlight =
+                character:FindFirstChild(
+                    "CharacterESP"
+                )
+
+
+
+            if highlight then
+
+                highlight:Destroy()
+
+            end
+
+
+        end
+
+
+    end
+
+end)
+
  ESPSection:NewToggle("Player ESP", "ToggleInfo", function(state)
     if state then
 
