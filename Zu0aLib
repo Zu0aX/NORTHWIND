@@ -115,13 +115,13 @@ local themeStyles = {
         TextColor = Color3.fromRGB(152, 99, 53),
         ElementColor = Color3.fromRGB(24, 24, 24)
     },
-    Zu0aColor = {
-        SchemeColor = Color3.fromRGB(0, 166, 58),
-        Background = Color3.fromRGB(31, 41, 43),
-        Header = Color3.fromRGB(56, 32, 38), -- done
-        TextColor = Color3.fromRGB(255,255,255),
-        ElementColor = Color3.fromRGB(56, 32, 38)
-    }
+Zu0aX = {
+    SchemeColor = Color3.fromRGB(0, 255, 220),
+    Background = Color3.fromRGB(2, 5, 12),
+    Header = Color3.fromRGB(0, 95, 140),
+    TextColor = Color3.fromRGB(255,255,255),
+    ElementColor = Color3.fromRGB(5,45,65)
+	}
 }
 local oldTheme = ""
 
