@@ -1396,8 +1396,8 @@ local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
 
 wait()
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Igor2387/NORTHWIND/refs/heads/main/Zu0aLib"))()
-    local Window = Library.CreateLib("Northwind GUI", "BloodTheme")
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Igor2387/NORTHWIND/refs/heads/main/Zu0aLib2"))()
+    local Window = Library.CreateLib("Northwind GUI", "NeonSpiral")
  
     -- MAIN
     
