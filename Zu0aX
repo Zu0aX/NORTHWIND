@@ -1,7 +1,6 @@
-
 --====================================
 -- ZU0A+ NORTHWIND INTRO
--- CLEAN FINAL VERSION
+-- TEAL REACTOR VERSION
 --====================================
 
 local Players = game:GetService("Players")
@@ -23,7 +22,6 @@ end
 if SoundService:FindFirstChild("NorthwindDing") then
     SoundService.NorthwindDing:Destroy()
 end
-
 
 
 
@@ -86,9 +84,9 @@ Background.Size =
 
 Background.BackgroundColor3 =
     Color3.fromRGB(
-        5,
         3,
-        3
+        8,
+        15
     )
 
 
@@ -152,9 +150,9 @@ Title.TextSize =
 
 Title.TextColor3 =
     Color3.fromRGB(
-        255,
-        80,
-        20
+        0,
+        220,
+        255
     )
 
 
@@ -192,9 +190,9 @@ TitleGlow.Thickness =
 
 TitleGlow.Color =
     Color3.fromRGB(
+        0,
         255,
-        80,
-        0
+        220
     )
 
 
@@ -259,9 +257,9 @@ Welcome.TextSize =
 
 Welcome.TextColor3 =
     Color3.fromRGB(
-        230,
-        230,
-        230
+        220,
+        240,
+        255
     )
 
 
@@ -325,9 +323,9 @@ Loading.TextSize =
 
 Loading.TextColor3 =
     Color3.fromRGB(
-        255,
-        160,
-        40
+        0,
+        230,
+        255
     )
 
 
@@ -390,9 +388,9 @@ for _,symbol in ipairs(SymbolList) do
 
     obj.TextColor3 =
         Color3.fromRGB(
-            255,
-            120,
-            20
+            0,
+            220,
+            255
         )
 
 
@@ -421,13 +419,6 @@ for _,symbol in ipairs(SymbolList) do
 
 
 end
-
-
-
-
-
-
-
 --====================================
 -- ENERGY RINGS
 --====================================
@@ -479,6 +470,8 @@ local function CreateRing(
 
 
 
+
+
     local corner =
         Instance.new("UICorner")
 
@@ -492,6 +485,9 @@ local function CreateRing(
 
     corner.Parent =
         ring
+
+
+
 
 
 
@@ -513,9 +509,9 @@ local function CreateRing(
 
     stroke.Color =
         Color3.fromRGB(
-            255,
-            80,
-            0
+            0,
+            220,
+            255
         )
 
 
@@ -542,45 +538,7 @@ CreateRing(1150,420,.3,-1,3)
 CreateRing(1000,350,.5,1,2)
 
 CreateRing(850,300,.8,-1,2)
---====================================
--- DING SOUND SYSTEM
---====================================
 
-local Ding =
-    Instance.new("Sound")
-
-
-Ding.Name =
-    "NorthwindDing"
-
-
-Ding.Parent =
-    SoundService
-
-
-Ding.SoundId =
-    "rbxassetid://106735357650197"
-
-
-Ding.Volume =
-    2
-
-
-Ding.PlayOnRemove =
-    false
-
-
-
-
-pcall(function()
-
-    ContentProvider:PreloadAsync(
-        {
-            Ding
-        }
-    )
-
-end)
 
 
 
@@ -614,6 +572,7 @@ task.spawn(function()
 
 
 
+
         for _,ring in ipairs(
             EnergyRings
         ) do
@@ -627,12 +586,13 @@ task.spawn(function()
 
 
 
+
             ring.Stroke.Color =
                 Color3.fromRGB(
-                    255,
-                    60 +
-                    (pulse*190),
-                    0
+                    0,
+                    170 +
+                    (pulse*85),
+                    255
                 )
 
 
@@ -695,9 +655,9 @@ Scanner.Size =
 
 Scanner.BackgroundColor3 =
     Color3.fromRGB(
+        180,
         255,
-        255,
-        180
+        255
     )
 
 
@@ -706,6 +666,8 @@ Scanner.Position =
         .5,
         .47
     )
+
+
 
 
 
@@ -727,6 +689,9 @@ ScannerCorner.Parent =
 
 
 
+
+
+
 local ScannerGlow =
     Instance.new("UIStroke")
 
@@ -741,9 +706,9 @@ ScannerGlow.Thickness =
 
 ScannerGlow.Color =
     Color3.fromRGB(
+        0,
         255,
-        100,
-        0
+        220
     )
 
 
@@ -794,10 +759,9 @@ task.spawn(function()
 
         Scanner.BackgroundColor3 =
             Color3.fromRGB(
+                120,
                 255,
-                120 +
-                pulse*120,
-                0
+                255
             )
 
 
@@ -877,12 +841,12 @@ task.spawn(function()
 
         spark.TextColor3 =
             Color3.fromRGB(
-                255,
+                0,
                 math.random(
-                    80,
-                    230
+                    180,
+                    255
                 ),
-                0
+                255
             )
 
 
@@ -923,11 +887,13 @@ task.spawn(function()
             ),
             {
                 TextTransparency = 1,
+
                 Rotation =
                     math.random(
                         -180,
                         180
                     ),
+
                 Size =
                     UDim2.fromOffset(
                         5,
@@ -961,6 +927,45 @@ task.spawn(function()
 
 
 end)
+--====================================
+-- DING SOUND SYSTEM
+--====================================
+
+local Ding =
+    Instance.new("Sound")
+
+
+Ding.Name =
+    "NorthwindDing"
+
+
+Ding.Parent =
+    SoundService
+
+
+Ding.SoundId =
+    "rbxassetid://106735357650197"
+
+
+Ding.Volume =
+    2
+
+
+Ding.PlayOnRemove =
+    false
+
+
+
+pcall(function()
+
+    ContentProvider:PreloadAsync(
+        {
+            Ding
+        }
+    )
+
+end)
+
 
 
 
@@ -985,11 +990,12 @@ task.spawn(function()
 
             local color =
                 Color3.fromRGB(
-                    255,
-                    40 +
-                    (215*i),
-                    0
+                    0,
+                    170 +
+                    (85*i),
+                    255
                 )
+
 
 
             Title.TextColor3 =
@@ -1016,11 +1022,12 @@ task.spawn(function()
 
             local color =
                 Color3.fromRGB(
-                    255,
-                    40 +
-                    (215*i),
-                    0
+                    0,
+                    170 +
+                    (85*i),
+                    255
                 )
+
 
 
             Title.TextColor3 =
@@ -1043,6 +1050,15 @@ task.spawn(function()
 
 
 end)
+
+
+
+
+
+
+
+
+
 --====================================
 -- INTRO ENTRANCE
 --====================================
@@ -1090,6 +1106,8 @@ TweenService:Create(
 
 
 
+
+
 --====================================
 -- PLAY DING
 --====================================
@@ -1100,8 +1118,6 @@ task.wait(1)
 Ding:Play()
 
 
-
--- Fade Ding after 9.5 seconds
 
 task.delay(
     9.5,
@@ -1333,6 +1349,22 @@ for _,v in ipairs(
 
 
 
+    elseif v:IsA("UIStroke") then
+
+
+
+        TweenService:Create(
+            v,
+            TweenInfo.new(
+                1
+            ),
+            {
+                Transparency = 1
+            }
+        ):Play()
+
+
+
     end
 
 
@@ -1371,6 +1403,8 @@ Gui:Destroy()
 --====================================
 -- MAIN GUI SCRIPT STARTS BELOW
 --====================================
+
+
 task.spawn(function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/CreatorLaunch"))()
 end)
@@ -1396,20 +1430,17 @@ local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
 
 wait()
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Igor2387/NORTHWIND/refs/heads/main/Zu0aLib2"))()
-    local Window = Library.CreateLib("Northwind GUI", "NeonSpiral")
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/Zu0aLib"))()
+    local Window = Library.CreateLib("Zu0a X Northwind Client", "Ocean")
  
     -- MAIN
     
-	            local Main = Window:NewTab("Zu0a X Updated - 8/13/26")
+	            local Main = Window:NewTab("Updated - 8/15/26")
         local MainSection = Main:NewSection("UI Rework, added more loadouts, updated ESP, more")
-        local MainSection = Main:NewSection("- COMING SOON -")
-        local MainSection = Main:NewSection("Infinite Stamina REWORKED")
 		local MainSection = Main:NewSection("- DEVELOPERS -")
         local MainSection = Main:NewSection("Zu0a")
         local MainSection = Main:NewSection("- HELPERS -")
         local MainSection = Main:NewSection("Blissful#4992")
-		local MainSection = Main:NewSection("FederalNigger")
 
 
 local Main = Window:NewTab("Loadouts")
