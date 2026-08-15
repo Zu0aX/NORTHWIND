@@ -133,7 +133,6 @@ local themeStyles = {
         NeonOutline = true,
         NeonSpeed = 2
     }
-
 }
 local oldTheme = ""
 
@@ -228,32 +227,6 @@ function Kavo.CreateLib(kavName, themeList)
 
     local blurFrame = Instance.new("Frame")
 
-    local NeonStroke
-    local NeonGradient
-
-    if themeList.NeonOutline then
-        NeonStroke = Instance.new("UIStroke")
-        NeonGradient = Instance.new("UIGradient")
-
-        NeonStroke.Parent = Main
-        NeonStroke.Thickness = 3
-        NeonStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-
-        NeonGradient.Parent = NeonStroke
-        NeonGradient.Color = ColorSequence.new({
-            ColorSequenceKeypoint.new(0, Color3.fromRGB(255,0,0)),
-            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,140,0)),
-            ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,0))
-        })
-
-        task.spawn(function()
-            while task.wait() do
-                NeonGradient.Rotation += themeList.NeonSpeed or 2
-            end
-        end)
-    end
-
-
     Kavo:DraggingEnabled(MainHeader, Main)
 
     blurFrame.Name = "blurFrame"
@@ -280,6 +253,34 @@ function Kavo.CreateLib(kavName, themeList)
     MainCorner.CornerRadius = UDim.new(0, 4)
     MainCorner.Name = "MainCorner"
     MainCorner.Parent = Main
+
+    --// NeonSpiral animated border
+
+    if themeList.NeonOutline then
+
+        local NeonStroke = Instance.new("UIStroke")
+        local NeonGradient = Instance.new("UIGradient")
+
+        NeonStroke.Parent = Main
+        NeonStroke.Thickness = 3
+        NeonStroke.Transparency = 0
+        NeonStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+        NeonGradient.Parent = NeonStroke
+        NeonGradient.Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0, Color3.fromRGB(255,0,0)),
+            ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255,140,0)),
+            ColorSequenceKeypoint.new(1, Color3.fromRGB(255,255,0))
+        })
+
+        task.spawn(function()
+            while task.wait() do
+                NeonGradient.Rotation = (NeonGradient.Rotation + (themeList.NeonSpeed or 2)) % 360
+            end
+        end)
+
+    end
+
 
     MainHeader.Name = "MainHeader"
     MainHeader.Parent = Main
@@ -436,7 +437,7 @@ function Kavo.CreateLib(kavName, themeList)
         page.Size = UDim2.new(1, 0, 1, 0)
         page.ScrollBarThickness = 5
         page.Visible = false
-        page.ScrollBarImageColor3 = Color3.fromRGB(themeList.SchemeColor.r * 255 - 16, themeList.SchemeColor.g * 255 - 15, themeList.SchemeColor.b * 255 - 28)
+        page.ScrollBarImageColor3 = themeList.SchemeColor
 
         pageListing.Name = "pageListing"
         pageListing.Parent = page
@@ -506,7 +507,7 @@ function Kavo.CreateLib(kavName, themeList)
         coroutine.wrap(function()
             while wait() do
                 page.BackgroundColor3 = themeList.Background
-                page.ScrollBarImageColor3 = Color3.fromRGB(themeList.SchemeColor.r * 255 - 16, themeList.SchemeColor.g * 255 - 15, themeList.SchemeColor.b * 255 - 28)
+                page.ScrollBarImageColor3 = themeList.SchemeColor
                 tabButton.TextColor3 = themeList.TextColor
                 tabButton.BackgroundColor3 = themeList.SchemeColor
             end
