@@ -125,6 +125,37 @@ Midnight = {
         45
     )
 },
+Midnight2 = {
+    SchemeColor = Color3.fromRGB(
+        0,
+        220,
+        255
+    ),
+
+    Background = Color3.fromRGB(
+        5,
+        10,
+        18
+    ),
+
+    Header = Color3.fromRGB(
+        8,
+        35,
+        55
+    ),
+
+    TextColor = Color3.fromRGB(
+        230,
+        250,
+        255
+    ),
+
+    ElementColor = Color3.fromRGB(
+        10,
+        45,
+        70
+    )
+},
     Sentinel = {
         SchemeColor = Color3.fromRGB(230, 35, 69),
         Background = Color3.fromRGB(32, 32, 32),
