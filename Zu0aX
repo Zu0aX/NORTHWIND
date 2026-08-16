@@ -1450,6 +1450,9 @@ local LoadoutSection = Main:NewSection("Loadouts")
 LoadoutSection:NewButton("Standard Loadout", "esp,fb,infyeild,nofog", function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Igor2387/NORTHWIND/refs/heads/main/standardloadout'))()
 end)
+LoadoutSection:NewButton("Bounty GUI", "bountys woo", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Igor2387/NORTHWIND/refs/heads/main/bountyloadout'))()
+end)
 LoadoutSection:NewButton("ELLESMERE click", "bountys woo", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/NorthShart_Trial"))()
 end)
@@ -1487,7 +1490,10 @@ end)
     end
     return f
 end
+   MainSection:NewButton("Instant Respawn", "test.", function()
 
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-620, -30214, -1519)
+end)
 ----- speed ----------
    MainSection:NewButton("Walkspeed Bypass - Q", "Increased Walkspeed.", function()
 
