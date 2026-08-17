@@ -214,7 +214,6 @@ local Character = LocalPlayer.Character
 Character.HumanoidRootPart.CFrame = CFrame.new(1884,101,-2400)
 end)
 
-
 MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and reset", function(state)
     if state then
         _G.AutoTP = true
@@ -248,6 +247,40 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
                 end
 
                 task.wait(1)
+            end
+        end)
+
+        -- Anti-jail proximity teleport
+        task.spawn(function()
+            local jailCheckPosition = Vector3.new(-122, 58, -2605)
+            local teleportPosition = Vector3.new(-620, -30214, -1519)
+
+            while _G.AutoTP do
+                local Character = game.Players.LocalPlayer.Character
+                local HRP = Character and Character:FindFirstChild("HumanoidRootPart")
+
+                if HRP then
+                    local distance = (HRP.Position - jailCheckPosition).Magnitude
+
+                    if distance <= 500 then
+                        local startTime = tick()
+
+                        while distance <= 500 and _G.AutoTP do
+                            task.wait(0.1)
+
+                            if HRP then
+                                distance = (HRP.Position - jailCheckPosition).Magnitude
+                            end
+
+                            if tick() - startTime >= 3 then
+                                HRP.CFrame = CFrame.new(teleportPosition)
+                                break
+                            end
+                        end
+                    end
+                end
+
+                task.wait(0.5)
             end
         end)
 
