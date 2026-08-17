@@ -218,6 +218,7 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
     if state then
         _G.AutoTP = true
 
+        -- Main farm teleport/reset loop
         task.spawn(function()
             while _G.AutoTP do
                 local Players = game:GetService("Players")
@@ -250,7 +251,7 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
             end
         end)
 
-        -- Anti-jail proximity teleport
+        -- Instant anti-jail teleport
         task.spawn(function()
             local jailCheckPosition = Vector3.new(-122, 58, -2605)
             local teleportPosition = Vector3.new(-620, -30214, -1519)
@@ -263,24 +264,12 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
                     local distance = (HRP.Position - jailCheckPosition).Magnitude
 
                     if distance <= 500 then
-                        local startTime = tick()
-
-                        while distance <= 500 and _G.AutoTP do
-                            task.wait(0.1)
-
-                            if HRP then
-                                distance = (HRP.Position - jailCheckPosition).Magnitude
-                            end
-
-                            if tick() - startTime >= 3 then
-                                HRP.CFrame = CFrame.new(teleportPosition)
-                                break
-                            end
-                        end
+                        HRP.CFrame = CFrame.new(teleportPosition)
+                        task.wait(1)
                     end
                 end
 
-                task.wait(0.5)
+                task.wait(0.1)
             end
         end)
 
@@ -288,7 +277,6 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
         _G.AutoTP = false
     end
 end)
-
 MainSection:NewButton("Board TP", "Teleport", function()
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
