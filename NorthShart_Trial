@@ -218,18 +218,28 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
     if state then
         _G.AutoTP = true
 
-        -- Main farm teleport/reset loop
         task.spawn(function()
+            local Players = game:GetService("Players")
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+            local jailPosition = Vector3.new(1884, 101, -2400)
+            local dangerPosition = Vector3.new(-122, 58, -2605)
+            local emergencyTP = Vector3.new(-620, -30214, -1519)
+
             while _G.AutoTP do
-                local Players = game:GetService("Players")
-                local ReplicatedStorage = game:GetService("ReplicatedStorage")
                 local Character = Players.LocalPlayer.Character
                 local HRP = Character and Character:FindFirstChild("HumanoidRootPart")
 
                 if HRP then
-                    local targetPosition = Vector3.new(1884, 101, -2400)
 
-                    HRP.CFrame = CFrame.new(targetPosition)
+                    -- Emergency teleport if within 500 studs of danger area
+                    if (HRP.Position - dangerPosition).Magnitude <= 500 then
+                        HRP.CFrame = CFrame.new(emergencyTP)
+                        task.wait(1)
+                    end
+
+                    -- Normal jail farm teleport
+                    HRP.CFrame = CFrame.new(jailPosition)
 
                     task.wait(2)
 
@@ -237,7 +247,7 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
                         break
                     end
 
-                    if (HRP.Position - targetPosition).Magnitude <= 10 then
+                    if (HRP.Position - jailPosition).Magnitude <= 10 then
                         local args = {
                             [1] = ReplicatedStorage.Interacting,
                             [2] = "Reset"
@@ -251,32 +261,11 @@ MainSection:NewToggle("TP Outside Jail - Farm", "Toggles automatic teleport and 
             end
         end)
 
-        -- Instant anti-jail teleport
-        task.spawn(function()
-            local jailCheckPosition = Vector3.new(-122, 58, -2605)
-            local teleportPosition = Vector3.new(-620, -30214, -1519)
-
-            while _G.AutoTP do
-                local Character = game.Players.LocalPlayer.Character
-                local HRP = Character and Character:FindFirstChild("HumanoidRootPart")
-
-                if HRP then
-                    local distance = (HRP.Position - jailCheckPosition).Magnitude
-
-                    if distance <= 500 then
-                        HRP.CFrame = CFrame.new(teleportPosition)
-                        task.wait(1)
-                    end
-                end
-
-                task.wait(0.1)
-            end
-        end)
-
     else
         _G.AutoTP = false
     end
 end)
+
 MainSection:NewButton("Board TP", "Teleport", function()
 local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
