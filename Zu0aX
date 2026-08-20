@@ -86,6 +86,11 @@ end)
     end
     return f
 end
+
+
+
+
+
    MainSection:NewButton("Instant Respawn", "test.", function()
 
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-620, -30214, -1519)
@@ -130,159 +135,159 @@ end
 
 onSelected(game.Players.LocalPlayer:GetMouse())
 end)
-        MainSection:NewToggle("Large Head Hitbox", "toggles hitboxes", function(state)
-    if state then
-            for i, v in ipairs(game.Players:GetChildren()) do
-                if v.Name == game.Players.LocalPlayer.Name then
-                    continue
-                end
-                v.Character.Head.Size = Vector3.new(4.7, 4.7, 4.7)
-                v.Character.Head.Material = "Neon"
-                v.Character.Head.BrickColor = BrickColor.new("Really red")
-                v.Character.Head.Transparency = 0.7
+
+MainSection:NewSlider(
+    "Adjust Head Hitbox",
+    "Adjust head size from 0.1 to 6.0",
+    59,
+    0,
+    function(s)
+
+        local Players = game:GetService("Players")
+
+        -- 0 = 0.1
+        -- 1 = 0.2
+        -- 10 = 1.1
+        -- 20 = 2.1
+        -- 30 = 3.1
+        -- 40 = 4.1
+        -- 50 = 5.1
+        -- 59 = 6.0
+        local size = 0.1 + (s / 10)
+
+        getgenv().HeadHitboxSize = size
+
+        local function applyHead(character)
+
+            if not character then
+                return
             end
 
-    else
-        for i, v in ipairs(game.Players:GetChildren()) do
-            if v.Name == game.Players.LocalPlayer.Name then
-                continue
-            end
-            v.Character.Head.Size = Vector3.new(1, 1, 1)
-            v.Character.Head.BrickColor = BrickColor.new("Tan")
-            v.Character.Head.Transparency = 0
-         end
-    end
-end)
-
-local SmallHeadEnabled = false
-local HeadLoop = nil
-
-MainSection:NewToggle("Small Head Hitbox", "toggles hitboxes", function(state)
-
-    SmallHeadEnabled = state
-
-    if state then
-        
-        -- Apply + keep updating
-        HeadLoop = task.spawn(function()
-            while SmallHeadEnabled do
-                
-                for _, v in ipairs(game.Players:GetPlayers()) do
-                    if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Head") then
-                        local head = v.Character.Head
-
-                        head.Size = Vector3.new(3, 3, 3)
-                        head.Material = Enum.Material.Neon
-                        head.BrickColor = BrickColor.new("Really red")
-                        head.Transparency = 0.5
-                    end
-                end
-
-                task.wait(3)
-            end
-        end)
-
-    else
-        
-        -- Stop loop
-        SmallHeadEnabled = false
-
-        -- Reset heads
-        for _, v in ipairs(game.Players:GetPlayers()) do
-            if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Head") then
-                local head = v.Character.Head
-
-                head.Size = Vector3.new(1, 1, 1)
-                head.Material = Enum.Material.Plastic
-                head.BrickColor = BrickColor.new("Tan")
-                head.Transparency = 0
-            end
-        end
-    end
-end)
-
--- New players + respawns
-game.Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function(char)
-        task.wait(1)
-
-        if SmallHeadEnabled then
-            local head = char:FindFirstChild("Head")
+            local head = character:FindFirstChild("Head")
 
             if head then
-                head.Size = Vector3.new(3, 3, 3)
+                head.Size = Vector3.new(
+                    size,
+                    size,
+                    size
+                )
+
                 head.Material = Enum.Material.Neon
                 head.BrickColor = BrickColor.new("Really red")
-                head.Transparency = 0.5
+                head.Transparency = 0.7
             end
         end
-    end)
-end)
-local ExtraSmallHeadEnabled = false
-local ExtraSmallHeadLoop = nil
 
-MainSection:NewToggle("Extra Small Head Hitbox", "toggles hitboxes", function(state)
+        -- Players
+        for _, player in ipairs(Players:GetPlayers()) do
 
-    ExtraSmallHeadEnabled = state
+            if player ~= Players.LocalPlayer then
+                applyHead(player.Character)
+            end
 
-    if state then
-        
-        ExtraSmallHeadLoop = task.spawn(function()
-            while ExtraSmallHeadEnabled do
-                
-                for _, v in ipairs(game.Players:GetPlayers()) do
-                    if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Head") then
-                        local head = v.Character.Head
+        end
 
-                        head.Size = Vector3.new(2, 2, 2)
-                        head.Material = Enum.Material.Neon
-                        head.BrickColor = BrickColor.new("Really red")
-                        head.Transparency = 0.5
+        -- Workspace.Characters
+        local charactersFolder =
+            workspace:FindFirstChild("Characters")
+
+        if charactersFolder then
+
+            for _, character in ipairs(
+                charactersFolder:GetChildren()
+            ) do
+
+                applyHead(character)
+
+            end
+
+        end
+
+        -- Start scanner once
+        if not getgenv().HeadHitboxScanner then
+
+            getgenv().HeadHitboxScanner = true
+
+            task.spawn(function()
+
+                while getgenv().HeadHitboxScanner do
+
+                    local currentSize =
+                        getgenv().HeadHitboxSize or 0.1
+
+                    -- Players
+                    for _, player in ipairs(
+                        Players:GetPlayers()
+                    ) do
+
+                        if player ~= Players.LocalPlayer then
+
+                            local character =
+                                player.Character
+
+                            local head =
+                                character
+                                and character:FindFirstChild("Head")
+
+                            if head then
+
+                                head.Size = Vector3.new(
+                                    currentSize,
+                                    currentSize,
+                                    currentSize
+                                )
+
+                                head.Material =
+                                    Enum.Material.Neon
+
+                                head.BrickColor =
+                                    BrickColor.new("Really red")
+
+                                head.Transparency = 0.7
+                            end
+                        end
                     end
+
+                    -- Workspace.Characters
+                    local charactersFolder =
+                        workspace:FindFirstChild("Characters")
+
+                    if charactersFolder then
+
+                        for _, character in ipairs(
+                            charactersFolder:GetChildren()
+                        ) do
+
+                            local head =
+                                character:FindFirstChild("Head")
+
+                            if head then
+
+                                head.Size = Vector3.new(
+                                    currentSize,
+                                    currentSize,
+                                    currentSize
+                                )
+
+                                head.Material =
+                                    Enum.Material.Neon
+
+                                head.BrickColor =
+                                    BrickColor.new("Really red")
+
+                                head.Transparency = 0.7
+                            end
+                        end
+                    end
+
+                    task.wait(1)
                 end
-
-                task.wait(3)
-            end
-        end)
-
-    else
-        
-        ExtraSmallHeadEnabled = false
-
-        for _, v in ipairs(game.Players:GetPlayers()) do
-            if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Head") then
-                local head = v.Character.Head
-
-                head.Size = Vector3.new(1, 1, 1)
-                head.Material = Enum.Material.Plastic
-                head.BrickColor = BrickColor.new("Tan")
-                head.Transparency = 0
-            end
+            end)
         end
+
+        print("Head Size:", size)
     end
-end)
-
--- New players + respawns
-game.Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function(char)
-        task.wait(1)
-
-        if ExtraSmallHeadEnabled then
-            local head = char:FindFirstChild("Head")
-
-            if head then
-                head.Size = Vector3.new(2, 2, 2)
-                head.Material = Enum.Material.Neon
-                head.BrickColor = BrickColor.new("Really red")
-                head.Transparency = 0.5
-            end
-        end
-    end)
-end)
-
---- HEAD HITBOX ENDS!
-
-
+)
 
         MainSection:NewToggle("Large Body Hitbox", "toggles hitboxes", function(state)
     if state then
@@ -2123,6 +2128,99 @@ end)
 
     local Main = Window:NewTab("Misc")
         local MainSection = Main:NewSection("Misc Features")
+
+        MainSection:NewTextBox("Load House", "Enter house name", function(txt)
+
+    local Players = game:GetService("Players")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+    local localPlayer = Players.LocalPlayer
+
+    local searchName = tostring(txt)
+        :lower()
+        :gsub("^%s*(.-)%s*$", "%1")
+
+    if searchName == "" then
+        warn("Enter a house name.")
+        return
+    end
+
+    local scrollingContent =
+        localPlayer.PlayerGui
+        :WaitForChild("InterfaceGuis")
+        :WaitForChild("Houses")
+        :WaitForChild("Main")
+        :WaitForChild("Items")
+        :WaitForChild("ScrollingContent")
+
+    local foundId = nil
+
+    -- Check every house ID
+    for _, house in ipairs(scrollingContent:GetChildren()) do
+
+        -- House IDs are numeric
+        if tonumber(house.Name) then
+
+            local houseName = house:FindFirstChild("Content")
+                and house.Content:FindFirstChild("HouseName")
+
+            if houseName then
+
+                local textGui =
+                    houseName:FindFirstChild("TextGui")
+
+                if textGui and textGui:IsA("TextLabel") then
+
+                    local displayedName =
+                        tostring(textGui.Text)
+                        :lower()
+                        :gsub("^%s*(.-)%s*$", "%1")
+
+                    if displayedName == searchName then
+                        foundId = house.Name
+                        break
+                    end
+                end
+            end
+        end
+    end
+
+    if not foundId then
+        warn("House not found: " .. txt)
+        return
+    end
+
+    print("Found house:", txt)
+    print("House ID:", foundId)
+
+    local args = {
+        [1] = ReplicatedStorage.Interacting,
+        [2] = "LoadHouse",
+        [3] = foundId,
+    }
+
+    ReplicatedStorage.DefinEvents.InstanceRequestFunction
+        :InvokeServer(table.unpack(args))
+
+    print("Loaded:", txt)
+end)
+
+MainSection:NewTextBox("Unload House", "Type anything and press Enter", function(txt)
+
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+    local args = {
+        [1] = ReplicatedStorage.Interacting,
+        [2] = "UnloadHouse"
+    }
+
+    ReplicatedStorage.DefinEvents.InstanceRequestFunction
+        :InvokeServer(table.unpack(args))
+
+    print("House unloaded")
+end)
+
+
         MainSection:NewButton("Player Tool Logger GUI", "lol", function()
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -3039,9 +3137,7 @@ print("[Inventory Inspector] GUI loaded")
 print("[Inventory Inspector] Waiting for data...")
 print("========================================")
         end)
-MainSection:NewButton("Dwarf", "lol", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Size = Vector3.new(1, 1, 1)
-    end)
+
 
     MainSection:NewButton("Fullbright", "Brightness", function()
 if not _G.FullBrightExecuted then
@@ -3160,28 +3256,7 @@ game.Lighting.FogEnd = 100000
 	end
     end)
 
-MainSection:NewButton("Water Walker", "Ragdolls player", function()
 
-    local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-		local part = Instance.new("Part")
-		part.Parent = workspace
-		part.CFrame = CFrame.new(-1830, 49, 1870)
-        part.Anchored = true
-        part.Size = Vector3.new(5, 5, 5)
-        part.Transparency = 1
-    wait()
-    local Players = game:GetService("Players")
-
-local player = Players.LocalPlayer
-		local part = Instance.new("Part")
-		part.Parent = workspace
-		part.CFrame = CFrame.new(1208, -7, 870)
-        part.Anchored = true
-        part.Size = Vector3.new(10000, 1, 10000)
-        part.Transparency = 1
-    end)
    MainSection:NewButton("Infinite Yield", "EXPLOIT HUB", function()
 
 
@@ -3194,6 +3269,8 @@ end)
 	Library:ToggleUI()
 end)
 local MainSection = Main:NewSection("Misc Settings")
+
+
 MainSection:NewButton("Player Notifications", "notifys join/leave", function()
 
     if not game:IsLoaded() then
