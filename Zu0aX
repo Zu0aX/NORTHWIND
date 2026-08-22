@@ -1,12 +1,7 @@
 
-
-
 task.spawn(function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/CreatorLaunch"))()
 end)
-
-
-
 
 --====================================
 -- MAIN GUI SCRIPT STARTS BELOW
@@ -24,19 +19,19 @@ local Mouse = Player:GetMouse()
 local Camera = game:GetService("Workspace").CurrentCamera
 local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
+wait(0.1)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/Other/refs/heads/main/APIMod"))() 
+wait(0.1)
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/Zu0aLib"))()
 
-wait()
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/Zu0aLib"))()
-    local Window = Library.CreateLib("Zu0a X Northwind Client", "Ocean")
+local Window = Library.CreateLib("Zu0a X Northwind Client", "Ocean")
  
     -- MAIN
     
-	            local Main = Window:NewTab("Updated - 8/15/26")
-        local MainSection = Main:NewSection("UI Rework, added more loadouts, updated ESP, more")
-		local MainSection = Main:NewSection("- DEVELOPERS -")
+	            local Main = Window:NewTab("Updated - 8/22/26")
+        local MainSection = Main:NewSection("Inf Stamina, Auto Reload")
+		local MainSection = Main:NewSection("- DEVELOPER -")
         local MainSection = Main:NewSection("Zu0a")
-        local MainSection = Main:NewSection("- HELPERS -")
-        local MainSection = Main:NewSection("Blissful#4992")
 
 
 local Main = Window:NewTab("Loadouts")
@@ -48,9 +43,6 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/Igor2387/NORTHWIND/re
 end)
 LoadoutSection:NewButton("Bounty GUI", "bountys woo", function()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Igor2387/NORTHWIND/refs/heads/main/bountyloadout'))()
-end)
-LoadoutSection:NewButton("CANTERMAGNE click", "esp,fb,infyeild,nofog", function()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/NorthShart'))()
 end)
 LoadoutSection:NewButton("ELLESMERE click", "bountys woo", function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/NorthShart_Trial"))()
@@ -92,52 +84,118 @@ end
 
 
 
+MainSection:NewToggle("Infinite Stamina", "Keeps stamina at max", function(state)
+    if state then
+        _G.InfiniteStamina = true
 
+        task.spawn(function()
+            while _G.InfiniteStamina do
+                local args = {
+                    [1] = game:GetService("Players").LocalPlayer,
+                    [2] = "Stamina",
+                    [3] = 1000,
+                }
+
+                firesignal(
+                    game:GetService("ReplicatedStorage").DefinEvents.Zu0aXFunction.OnClientEvent,
+                    table.unpack(args)
+                )
+
+                task.wait()
+            end
+        end)
+    else
+        _G.InfiniteStamina = false
+    end
+end)
+
+MainSection:NewToggle("Auto Reload Guns", "keep them held out!", function(state)
+
+    if state then
+        _G.AutoReloadGear = true
+
+        task.spawn(function()
+
+            local TargetFilter = workspace:WaitForChild("TargetFilter")
+            local Large = TargetFilter.EquipmentItems.Large
+
+            local playerName = game.Players.LocalPlayer.Name
+
+            local character = TargetFilter:FindFirstChild(playerName)
+
+            if not character then
+                return
+            end
+
+            local torso = character:FindFirstChild("UpperTorso", true)
+
+            if not torso then
+                return
+            end
+
+
+            -- Find gear
+            for _, model in ipairs(Large:GetChildren()) do
+
+                for _, obj in ipairs(model:GetDescendants()) do
+
+                    if obj:IsA("Weld")
+                    or obj:IsA("WeldConstraint")
+                    or obj:IsA("Motor6D") then
+
+                        if obj.Part0 == torso
+                        or obj.Part1 == torso then
+
+                            model.Name = "MyGear"
+
+                            break
+                        end
+                    end
+                end
+            end
+
+
+            while _G.AutoReloadGear do
+
+                local folder = workspace.TargetFilter.EquipmentItems.Large:FindFirstChild("MyGear")
+
+                if folder then
+
+                    for _, item in ipairs(folder:GetChildren()) do
+
+                        local args = {
+                            [1] = item,
+                            [2] = "Reload",
+                        }
+
+                        game:GetService("ReplicatedStorage")
+                            .DefinEvents
+                            .InstanceRequestFunction
+                            :InvokeServer(table.unpack(args))
+
+                    end
+
+                end
+
+                task.wait()
+            end
+
+        end)
+
+
+    else
+
+        _G.AutoReloadGear = false
+
+    end
+
+end)
 
    MainSection:NewButton("Instant Respawn", "test.", function()
 
 game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-620, -30214, -1519)
 end)
------ speed ----------
-   MainSection:NewButton("Walkspeed Bypass - Q", "Increased Walkspeed.", function()
 
-down = false
-velocity = Instance.new("BodyVelocity")
-velocity.maxForce = Vector3.new(100000, 0, 100000)
----vv Use that to change the speed v
-local speed = 50
-gyro = Instance.new("BodyGyro")
-gyro.maxTorque = Vector3.new(100000, 0, 100000)
-
-local hum = game.Players.LocalPlayer.Character.Humanoid
-
-function onButton1Down(mouse)
-down = true
-velocity.Parent = game.Players.LocalPlayer.Character.UpperTorso
-velocity.velocity = (hum.MoveDirection) * speed
-gyro.Parent = game.Players.LocalPlayer.Character.UpperTorso
-while down do
-if not down then break end
-velocity.velocity = (hum.MoveDirection) * speed
-local refpos = gyro.Parent.Position + (gyro.Parent.Position - workspace.CurrentCamera.CoordinateFrame.p).unit * 5
-gyro.cframe = CFrame.new(gyro.Parent.Position, Vector3.new(refpos.x, gyro.Parent.Position.y, refpos.z))
-wait(0.1)
-end
-end
-
-function onButton1Up(mouse)
-velocity.Parent = nil
-gyro.Parent = nil
-down = false
-end
---To Change the key in those 2 lines, replace the "q" with your desired key
-function onSelected(mouse)
-mouse.KeyDown:connect(function(k) if k:lower()=="q"then onButton1Down(mouse)end end)
-mouse.KeyUp:connect(function(k) if k:lower()=="q"then onButton1Up(mouse)end end)
-end
-
-onSelected(game.Players.LocalPlayer:GetMouse())
-end)
 
 MainSection:NewSlider(
     "Adjust Head Hitbox",
@@ -291,7 +349,46 @@ MainSection:NewSlider(
         print("Head Size:", size)
     end
 )
+----- speed ----------
+   MainSection:NewButton("Walkspeed Bypass - Q", "Increased Walkspeed.", function()
 
+down = false
+velocity = Instance.new("BodyVelocity")
+velocity.maxForce = Vector3.new(100000, 0, 100000)
+---vv Use that to change the speed v
+local speed = 50
+gyro = Instance.new("BodyGyro")
+gyro.maxTorque = Vector3.new(100000, 0, 100000)
+
+local hum = game.Players.LocalPlayer.Character.Humanoid
+
+function onButton1Down(mouse)
+down = true
+velocity.Parent = game.Players.LocalPlayer.Character.UpperTorso
+velocity.velocity = (hum.MoveDirection) * speed
+gyro.Parent = game.Players.LocalPlayer.Character.UpperTorso
+while down do
+if not down then break end
+velocity.velocity = (hum.MoveDirection) * speed
+local refpos = gyro.Parent.Position + (gyro.Parent.Position - workspace.CurrentCamera.CoordinateFrame.p).unit * 5
+gyro.cframe = CFrame.new(gyro.Parent.Position, Vector3.new(refpos.x, gyro.Parent.Position.y, refpos.z))
+wait(0.1)
+end
+end
+
+function onButton1Up(mouse)
+velocity.Parent = nil
+gyro.Parent = nil
+down = false
+end
+--To Change the key in those 2 lines, replace the "q" with your desired key
+function onSelected(mouse)
+mouse.KeyDown:connect(function(k) if k:lower()=="q"then onButton1Down(mouse)end end)
+mouse.KeyUp:connect(function(k) if k:lower()=="q"then onButton1Up(mouse)end end)
+end
+
+onSelected(game.Players.LocalPlayer:GetMouse())
+end)
         MainSection:NewToggle("Large Body Hitbox", "toggles hitboxes", function(state)
     if state then
             for i, v in ipairs(game.Players:GetChildren()) do
@@ -342,8 +439,7 @@ end)
  loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/Anti-afk/main/antiafkbyhassanxzyn"))();
  end)
  
-MainSection:NewButton("Infinite Stamina", "STAM", function()
-end)
+
 
 
 local Main = Window:NewTab("ESPs")
@@ -369,7 +465,7 @@ ESPSection:NewToggle("Character ESP", "Shows character info, titles, and health"
         local HealthEvent =
             ReplicatedStorage
             .DefinEvents
-            .InstancePropertyFunction
+            .Zu0aXFunction
 
 
 
@@ -3257,8 +3353,8 @@ game.Lighting.FogEnd = 100000
 			v:Destroy()
 		end
 	end
-    end)
 
+end)
 
    MainSection:NewButton("Infinite Yield", "EXPLOIT HUB", function()
 
@@ -3452,5 +3548,6 @@ spawn(function()
 loadstring(game:HttpGet("https://pastebin.com/raw/7n9g57p2"))()
 end)
 end)
+
 
 -- ending
