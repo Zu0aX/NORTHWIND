@@ -197,6 +197,64 @@ game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-620, -3
 end)
 
 
+local function StartHeadHitboxScanner()
+    if getgenv().HeadHitboxScanner then
+        return
+    end
+
+    getgenv().HeadHitboxScanner = true
+
+    task.spawn(function()
+        local Players = game:GetService("Players")
+
+        while getgenv().HeadHitboxScanner do
+            local currentSize = getgenv().HeadHitboxSize or 0.1
+
+            -- Players
+            for _, player in ipairs(Players:GetPlayers()) do
+                if player ~= Players.LocalPlayer then
+                    local character = player.Character
+                    local head = character and character:FindFirstChild("Head")
+
+                    if head then
+                        head.Size = Vector3.new(
+                            currentSize,
+                            currentSize,
+                            currentSize
+                        )
+                        head.Material = Enum.Material.Neon
+                        head.BrickColor = BrickColor.new("Really red")
+                        head.Transparency = 0.7
+                    end
+                end
+            end
+
+            -- Workspace.Characters
+            local charactersFolder = workspace:FindFirstChild("Characters")
+
+            if charactersFolder then
+                for _, character in ipairs(charactersFolder:GetChildren()) do
+                    local head = character:FindFirstChild("Head")
+
+                    if head then
+                        head.Size = Vector3.new(
+                            currentSize,
+                            currentSize,
+                            currentSize
+                        )
+                        head.Material = Enum.Material.Neon
+                        head.BrickColor = BrickColor.new("Really red")
+                        head.Transparency = 0.7
+                    end
+                end
+            end
+
+            task.wait(1)
+        end
+    end)
+end
+
+
 MainSection:NewSlider(
     "Adjust Head Hitbox",
     "Adjust head size from 0.1 to 6.0",
@@ -206,20 +264,15 @@ MainSection:NewSlider(
 
         local Players = game:GetService("Players")
 
-        -- 0 = 0.1
-        -- 1 = 0.2
-        -- 10 = 1.1
-        -- 20 = 2.1
-        -- 30 = 3.1
-        -- 40 = 4.1
-        -- 50 = 5.1
-        -- 59 = 6.0
         local size = 0.1 + (s / 10)
 
         getgenv().HeadHitboxSize = size
 
-        local function applyHead(character)
+        -- Make sure scanner is running again
+        StartHeadHitboxScanner()
 
+        -- Apply immediately
+        local function applyHead(character)
             if not character then
                 return
             end
@@ -227,12 +280,7 @@ MainSection:NewSlider(
             local head = character:FindFirstChild("Head")
 
             if head then
-                head.Size = Vector3.new(
-                    size,
-                    size,
-                    size
-                )
-
+                head.Size = Vector3.new(size, size, size)
                 head.Material = Enum.Material.Neon
                 head.BrickColor = BrickColor.new("Really red")
                 head.Transparency = 0.7
@@ -241,112 +289,55 @@ MainSection:NewSlider(
 
         -- Players
         for _, player in ipairs(Players:GetPlayers()) do
-
             if player ~= Players.LocalPlayer then
                 applyHead(player.Character)
             end
-
         end
 
         -- Workspace.Characters
-        local charactersFolder =
-            workspace:FindFirstChild("Characters")
+        local charactersFolder = workspace:FindFirstChild("Characters")
 
         if charactersFolder then
-
-            for _, character in ipairs(
-                charactersFolder:GetChildren()
-            ) do
-
+            for _, character in ipairs(charactersFolder:GetChildren()) do
                 applyHead(character)
-
             end
-
-        end
-
-        -- Start scanner once
-        if not getgenv().HeadHitboxScanner then
-
-            getgenv().HeadHitboxScanner = true
-
-            task.spawn(function()
-
-                while getgenv().HeadHitboxScanner do
-
-                    local currentSize =
-                        getgenv().HeadHitboxSize or 0.1
-
-                    -- Players
-                    for _, player in ipairs(
-                        Players:GetPlayers()
-                    ) do
-
-                        if player ~= Players.LocalPlayer then
-
-                            local character =
-                                player.Character
-
-                            local head =
-                                character
-                                and character:FindFirstChild("Head")
-
-                            if head then
-
-                                head.Size = Vector3.new(
-                                    currentSize,
-                                    currentSize,
-                                    currentSize
-                                )
-
-                                head.Material =
-                                    Enum.Material.Neon
-
-                                head.BrickColor =
-                                    BrickColor.new("Really red")
-
-                                head.Transparency = 0.7
-                            end
-                        end
-                    end
-
-                    -- Workspace.Characters
-                    local charactersFolder =
-                        workspace:FindFirstChild("Characters")
-
-                    if charactersFolder then
-
-                        for _, character in ipairs(
-                            charactersFolder:GetChildren()
-                        ) do
-
-                            local head =
-                                character:FindFirstChild("Head")
-
-                            if head then
-
-                                head.Size = Vector3.new(
-                                    currentSize,
-                                    currentSize,
-                                    currentSize
-                                )
-
-                                head.Material =
-                                    Enum.Material.Neon
-
-                                head.BrickColor =
-                                    BrickColor.new("Really red")
-
-                                head.Transparency = 0.7
-                            end
-                        end
-                    end
-
-                    task.wait(1)
-                end
-            end)
         end
 
         print("Head Size:", size)
+    end
+)
+
+
+MainSection:NewButton(
+    "Reset Head",
+    "Reset head color, size and transparency",
+    function()
+
+        -- STOP the scanner
+        getgenv().HeadHitboxScanner = false
+
+        local Characters = workspace:FindFirstChild("Characters")
+
+        if not Characters then
+            return
+        end
+
+        for _, character in pairs(Characters:GetChildren()) do
+
+            local head = character:FindFirstChild("Head")
+
+            if head and head:IsA("BasePart") then
+
+                -- Normal head
+                head.Size = Vector3.new(2, 1, 1)
+                head.Transparency = 0
+                head.Color = Color3.fromRGB(255, 204, 153)
+                head.Material = Enum.Material.Plastic
+
+            end
+        end
+
+        print("Head hitboxes reset")
     end
 )
 ----- speed ----------
@@ -1356,6 +1347,661 @@ ESPSection:NewToggle("Character ESP", "Shows character info, titles, and health"
     end
 
 end)
+--==================================================
+-- CURRENTLY HOLDING ESP
+--==================================================
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local EquipmentItems =
+    workspace
+    :WaitForChild("TargetFilter")
+    :WaitForChild("EquipmentItems")
+    :WaitForChild("Large")
+
+local HoldingESP = false
+
+--==================================================
+-- WEAPON DATABASE
+--==================================================
+
+local WeaponMeshes = {
+
+    ["17274237173"] = "Thunder Pistol",
+    ["102964541329103"] = "Greataxe",
+    ["5864877009"] = "Doglock Pistol",
+    ["6309100703"] = "Ferguson Rifle",
+    ["5864876748"] = "Charleston Musket",
+    ["83790320207384"] = "Cutlass",
+    ["5864875898"] = "Sharpe Pistol",
+    ["5864876896"] = "Clark Musket",
+    ["9757183039"] = "Kentucky Rifle",
+    ["5317954071"] = "Espingole",
+    ["5864876702"] = "Blunderbuss",
+    ["5864876954"] = "Holstein pistol",
+    ["5864876936"] = "Jezail",
+
+    -- Add more weapons here
+}
+
+--==================================================
+-- VALID WEAPON PARTS
+--==================================================
+
+local ValidWeaponParts = {
+    Wood = true,
+    Handle = true
+}
+
+--==================================================
+-- STORAGE
+--==================================================
+
+local CharacterWeapons = {}
+local WeldData = {}
+local WeldConnections = {}
+local ESPObjects = {}
+
+--==================================================
+-- LOCAL PLAYER CHECK
+--==================================================
+
+local function isLocalCharacter(character)
+
+    if not character then
+        return false
+    end
+
+    if LocalPlayer.Character
+        and character == LocalPlayer.Character then
+
+        return true
+    end
+
+    if character.Name == LocalPlayer.Name then
+        return true
+    end
+
+    return false
+
+end
+
+--==================================================
+-- GET MESH ID
+--==================================================
+
+local function getMeshId(object)
+
+    if not object then
+        return nil
+    end
+
+    if not ValidWeaponParts[object.Name] then
+        return nil
+    end
+
+    -- MeshPart
+    if object:IsA("MeshPart") then
+
+        return tostring(
+            object.MeshId
+        ):match("%d+")
+
+    end
+
+    -- SpecialMesh
+    if object:IsA("SpecialMesh") then
+
+        return tostring(
+            object.MeshId
+        ):match("%d+")
+
+    end
+
+    -- A Part containing SpecialMesh
+    local specialMesh =
+        object:FindFirstChildOfClass(
+            "SpecialMesh"
+        )
+
+    if specialMesh then
+
+        return tostring(
+            specialMesh.MeshId
+        ):match("%d+")
+
+    end
+
+    return nil
+
+end
+
+--==================================================
+-- FIND WOOD / HANDLE
+--==================================================
+
+local function findWeaponPart(part0)
+
+    if not part0 then
+        return nil
+    end
+
+    -- Part0 itself
+    local meshId =
+        getMeshId(part0)
+
+    if meshId then
+        return part0, meshId
+    end
+
+    -- Descendants
+    for _, object in ipairs(
+        part0:GetDescendants()
+    ) do
+
+        meshId =
+            getMeshId(object)
+
+        if meshId then
+            return object, meshId
+        end
+
+    end
+
+    return nil
+
+end
+
+--==================================================
+-- REMOVE ESP
+--==================================================
+
+local function removeESP(character)
+
+    local esp =
+        ESPObjects[character]
+
+    if not esp then
+        return
+    end
+
+    if esp.Billboard then
+        esp.Billboard:Destroy()
+    end
+
+    ESPObjects[character] = nil
+
+end
+
+--==================================================
+-- CLEAR CHARACTER
+--==================================================
+
+local function clearCharacter(character)
+
+    if not character then
+        return
+    end
+
+    CharacterWeapons[character] = nil
+
+    removeESP(character)
+
+end
+
+--==================================================
+-- CREATE WEAPON ESP
+--==================================================
+
+local function createESP(
+    character,
+    weaponPart,
+    weaponName
+)
+
+    -- NEVER SHOW LOCAL PLAYER
+    if isLocalCharacter(character) then
+        return
+    end
+
+    if not weaponPart then
+        return
+    end
+
+    -- Remove old ESP
+    removeESP(character)
+
+    --==================================================
+    -- BILLBOARD ATTACHED TO ACTUAL WEAPON
+    --==================================================
+
+    local billboard =
+        Instance.new("BillboardGui")
+
+    billboard.Name =
+        "CurrentlyHoldingESP"
+
+    billboard.Adornee =
+        weaponPart
+
+    billboard.Parent =
+        weaponPart
+
+    billboard.AlwaysOnTop =
+        true
+
+    -- Match Character ESP
+    billboard.Size =
+        UDim2.fromOffset(
+            200,
+            100
+        )
+
+    -- Small distance above Wood / Handle
+    billboard.StudsOffset =
+        Vector3.new(
+            0,
+            1.5,
+            0
+        )
+
+    --==================================================
+    -- LABEL
+    --==================================================
+
+    local label =
+        Instance.new("TextLabel")
+
+    label.Name =
+        "EquippedLabel"
+
+    label.Parent =
+        billboard
+
+    label.Size =
+        UDim2.fromOffset(
+            200,
+            18
+        )
+
+    label.Position =
+        UDim2.fromOffset(
+            0,
+            0
+        )
+
+    label.BackgroundTransparency =
+        1
+
+    -- Match Character ESP
+    label.TextColor3 =
+        Color3.fromRGB(
+            255,
+            255,
+            255
+        )
+
+    label.TextStrokeTransparency =
+        0
+
+    label.TextStrokeColor3 =
+        Color3.fromRGB(
+            0,
+            0,
+            0
+        )
+
+    label.Font =
+        Enum.Font.GothamBold
+
+    label.TextSize =
+        12
+
+    label.Text =
+        "Equipped: " .. weaponName
+
+    label.Visible =
+        true
+
+    ESPObjects[character] = {
+
+        Billboard = billboard,
+        Label = label,
+        WeaponPart = weaponPart
+
+    }
+
+end
+
+--==================================================
+-- CHECK WELD
+--==================================================
+
+local function checkWeld(weld)
+
+    if not weld
+        or not weld:IsA("Weld") then
+
+        return
+    end
+
+    local oldData =
+        WeldData[weld]
+
+    local part0 =
+        weld.Part0
+
+    local part1 =
+        weld.Part1
+
+    --==================================================
+    -- INVALID
+    --==================================================
+
+    if not part0 or not part1 then
+
+        if oldData then
+            clearCharacter(
+                oldData.Character
+            )
+        end
+
+        WeldData[weld] = nil
+
+        return
+    end
+
+    --==================================================
+    -- ONLY HANDS
+    --==================================================
+
+    if part1.Name ~= "RightHand"
+        and part1.Name ~= "LeftHand" then
+
+        -- Unequipped
+        if oldData then
+            clearCharacter(
+                oldData.Character
+            )
+        end
+
+        WeldData[weld] = nil
+
+        return
+    end
+
+    --==================================================
+    -- CHARACTER
+    --==================================================
+
+    local character =
+        part1.Parent
+
+    if not character
+        or not character:IsA("Model") then
+
+        return
+    end
+
+    --==================================================
+    -- NEVER TRACK LOCAL PLAYER
+    --==================================================
+
+    if isLocalCharacter(character) then
+
+        clearCharacter(character)
+
+        WeldData[weld] = nil
+
+        return
+    end
+
+    --==================================================
+    -- FIND WOOD / HANDLE
+    --==================================================
+
+    local weaponPart, meshId =
+        findWeaponPart(part0)
+
+    if not weaponPart then
+        return
+    end
+
+    --==================================================
+    -- WEAPON NAME
+    --==================================================
+
+    local weaponName =
+        WeaponMeshes[meshId]
+
+    if not weaponName then
+        return
+    end
+
+    --==================================================
+    -- CHARACTER CHANGED
+    --==================================================
+
+    if oldData
+        and oldData.Character
+        and oldData.Character ~= character then
+
+        clearCharacter(
+            oldData.Character
+        )
+
+    end
+
+    --==================================================
+    -- SAVE
+    --==================================================
+
+    CharacterWeapons[character] =
+        weaponName
+
+    WeldData[weld] = {
+
+        Character = character,
+        WeaponName = weaponName,
+        WeaponPart = weaponPart
+
+    }
+
+    --==================================================
+    -- CREATE ESP
+    --==================================================
+
+    if HoldingESP then
+
+        createESP(
+            character,
+            weaponPart,
+            weaponName
+        )
+
+    end
+
+end
+
+--==================================================
+-- TRACK WELD
+--==================================================
+
+local function trackWeld(weld)
+
+    if not weld:IsA("Weld") then
+        return
+    end
+
+    if WeldConnections[weld] then
+        return
+    end
+
+    WeldConnections[weld] = true
+
+    -- Initial check
+    checkWeld(weld)
+
+    -- Hand changes
+    weld:GetPropertyChangedSignal(
+        "Part1"
+    ):Connect(function()
+
+        checkWeld(weld)
+
+    end)
+
+    -- Weapon changes
+    weld:GetPropertyChangedSignal(
+        "Part0"
+    ):Connect(function()
+
+        checkWeld(weld)
+
+    end)
+
+end
+
+--==================================================
+-- INITIAL SCAN
+--==================================================
+
+for _, object in ipairs(
+    EquipmentItems:GetDescendants()
+) do
+
+    if object:IsA("Weld") then
+        trackWeld(object)
+    end
+
+end
+
+--==================================================
+-- NEW WELDS
+--==================================================
+
+EquipmentItems.DescendantAdded:Connect(
+    function(object)
+
+        if object:IsA("Weld") then
+
+            task.defer(function()
+
+                if object.Parent then
+                    trackWeld(object)
+                end
+
+            end)
+
+        end
+
+    end
+)
+
+--==================================================
+-- REMOVED WELDS
+--==================================================
+
+EquipmentItems.DescendantRemoving:Connect(
+    function(object)
+
+        if not object:IsA("Weld") then
+            return
+        end
+
+        local data =
+            WeldData[object]
+
+        if data then
+
+            clearCharacter(
+                data.Character
+            )
+
+        end
+
+        WeldData[object] = nil
+        WeldConnections[object] = nil
+
+    end
+)
+
+--==================================================
+-- LOCAL PLAYER RESPAWN PROTECTION
+--==================================================
+
+LocalPlayer.CharacterAdded:Connect(
+    function(character)
+
+        task.wait(0.1)
+
+        clearCharacter(character)
+
+    end
+)
+
+--==================================================
+-- MAIN GUI TOGGLE
+--==================================================
+
+ESPSection:NewToggle(
+    "Equipped ESP",
+    "Shows what weapon players are holding",
+    function(state)
+
+        HoldingESP = state
+
+        if state then
+
+            -- Re-scan all existing welds
+            for _, object in ipairs(
+                EquipmentItems:GetDescendants()
+            ) do
+
+                if object:IsA("Weld") then
+                    trackWeld(object)
+                end
+
+            end
+
+            -- Re-create ESP for currently equipped weapons
+            for _, data in pairs(
+                WeldData
+            ) do
+
+                if data.Character
+                    and data.WeaponPart
+                    and data.WeaponName
+                    and not isLocalCharacter(
+                        data.Character
+                    ) then
+
+                    createESP(
+                        data.Character,
+                        data.WeaponPart,
+                        data.WeaponName
+                    )
+
+                end
+
+            end
+
+        else
+
+            -- Remove every Equipped ESP
+            for character in pairs(
+                ESPObjects
+            ) do
+
+                removeESP(character)
+
+            end
+
+        end
+
+    end
+)
  ESPSection:NewToggle("Player ESP", "ToggleInfo", function(state)
     if state then
 
