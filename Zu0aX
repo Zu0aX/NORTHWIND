@@ -1381,6 +1381,7 @@ local WeaponMeshes = {
     ["5864876702"] = "Blunderbuss",
     ["5864876954"] = "Holstein pistol",
     ["5864876936"] = "Jezail",
+	["135099535380742"] = "Boarding Axe",
 
     -- Add more weapons here
 }
