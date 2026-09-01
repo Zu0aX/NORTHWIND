@@ -28,8 +28,8 @@ local Window = Library.CreateLib("Zu0a X Northwind Client", "Ocean")
  
     -- MAIN
     
-	            local Main = Window:NewTab("Updated - 8/22/26")
-        local MainSection = Main:NewSection("Inf Stamina, Auto Reload")
+	            local Main = Window:NewTab("Updated - 9/1/26")
+        local MainSection = Main:NewSection("Equipped ESP")
 		local MainSection = Main:NewSection("- DEVELOPER -")
         local MainSection = Main:NewSection("Zu0a")
 
