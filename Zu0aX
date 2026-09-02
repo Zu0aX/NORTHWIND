@@ -19,9 +19,7 @@ local Mouse = Player:GetMouse()
 local Camera = game:GetService("Workspace").CurrentCamera
 local UIS = game:GetService("UserInputService")
 local TS = game:GetService("TweenService")
-wait(0.1)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/Other/refs/heads/main/APIMod"))() 
-wait(0.1)
+
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/Zu0aLib"))()
 
 local Window = Library.CreateLib("Zu0a X Northwind Client", "Ocean")
