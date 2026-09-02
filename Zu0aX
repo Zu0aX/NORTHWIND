@@ -361,7 +361,10 @@ local effects = {
     "ProfessionBoost1",
     "CureColdDisease",
     "CureIndigestionDisease",
-    "ReloadSpeed3"
+    "ReloadSpeed3",
+    "Fortune1",
+    "Fortune2",
+    "Fortune3"
     
 }
 
