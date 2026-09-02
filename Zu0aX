@@ -340,6 +340,42 @@ MainSection:NewButton(
         print("Head hitboxes reset")
     end
 )
+--magic
+MainSection:NewButton("All Boosts", "Magic Man", function()
+local Player = game:GetService("Players").LocalPlayer
+local Remote = game:GetService("ReplicatedStorage").DefinEvents.Zu0aXFunction2
+
+local effects = {
+    "InventoryMaxSpace3",
+    "InventoryMaxSpace2",
+    "InventoryMaxSpace1",
+    "GuildBoost3",
+    "GuildBoost2",
+    "GuildBoost1",
+    "GunAim1",
+    "GunAim2",
+    "GunAim3",
+    "ThanksgivingDelight2",
+    "ProfessionBoost3",
+    "ProfessionBoost2",
+    "ProfessionBoost1",
+    "CureColdDisease",
+    "CureIndigestionDisease",
+    "ReloadSpeed3"
+    
+}
+
+for _, effect in ipairs(effects) do
+    local args = {
+        [1] = Player,
+        [2] = "AddEffect",
+        [3] = effect,
+        [4] = 99999,
+    }
+
+    firesignal(Remote.OnClientEvent, table.unpack(args))
+end
+end)
 ----- speed ----------
    MainSection:NewButton("Walkspeed Bypass - Q", "Increased Walkspeed.", function()
 
@@ -1381,7 +1417,6 @@ local WeaponMeshes = {
     ["5864876702"] = "Blunderbuss",
     ["5864876954"] = "Holstein pistol",
     ["5864876936"] = "Jezail",
-	["135099535380742"] = "Boarding Axe",
 
     -- Add more weapons here
 }
@@ -3708,7 +3743,7 @@ end)
 local event =
     ReplicatedStorage
     :WaitForChild("DefinEvents")
-    :WaitForChild("InstanceReplicateFunction")
+    :WaitForChild("Zu0aXFunction2")
 
 getgenv().InventoryConnection =
     event.OnClientEvent:Connect(function(...)
