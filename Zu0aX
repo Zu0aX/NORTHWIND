@@ -341,7 +341,67 @@ MainSection:NewButton(
     end
 )
 --magic
-MainSection:NewButton("All Boosts", "Magic Man", function()
+MainSection:NewDropdown("Effects", "Select Effect Category", {
+    "Luck Boosts",
+    "Inventory",
+    "Combat",
+    "Medical"
+}, function(currentOption)
+
+    local Player = game:GetService("Players").LocalPlayer
+    local Remote = game:GetService("ReplicatedStorage").DefinEvents.Zu0aXFunction2
+
+    local effects = {
+        ["Luck Boosts"] = {
+            "GuildBoost3",
+            "GuildBoost2",
+            "GuildBoost1",
+            "ProfessionBoost3",
+            "Fortune1",
+            "Fortune2",
+            "Fortune3",
+            "ProfessionBoost2",
+            "ThanksgivingDelight2",
+            "ProfessionBoost1"
+        },
+
+        ["Inventory"] = {
+            "InventoryMaxSpace3",
+            "InventoryMaxSpace2",
+            "InventoryMaxSpace1"
+        },
+
+        ["Combat"] = {
+            "GunAim1",
+            "GunAim2",
+            "GunAim3",
+            "ReloadSpeed1"
+        },
+
+        ["Medical"] = {
+            "CureColdDisease",
+            "CureIndigestionDisease",
+            "ColdResist1",
+            "ColdResist2",
+            "ColdResist3"
+        }
+    }
+
+    for _, effect in ipairs(effects[currentOption]) do
+        local args = {
+            [1] = Player,
+            [2] = "AddEffect",
+            [3] = effect,
+            [4] = 99999
+        }
+
+        firesignal(Remote.OnClientEvent, table.unpack(args))
+    end
+
+    print("Applied:", currentOption)
+
+end)
+MainSection:NewButton("All Effects", "Magic Man", function()
 local Player = game:GetService("Players").LocalPlayer
 local Remote = game:GetService("ReplicatedStorage").DefinEvents.Zu0aXFunction2
 
@@ -361,6 +421,9 @@ local effects = {
     "ProfessionBoost1",
     "CureColdDisease",
     "CureIndigestionDisease",
+    "ColdResist2",
+    "ColdResist1",
+    "ColdResist3",
     "Fortune1",
     "Fortune2",
     "Fortune3"
