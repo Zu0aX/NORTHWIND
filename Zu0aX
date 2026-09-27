@@ -23,13 +23,233 @@ wait(0.1)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/Other/refs/heads/main/APIMod"))() 
 wait(0.1)
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Zu0aX/NORTHWIND/refs/heads/main/Zu0aLib"))()
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
 
-local Window = Library.CreateLib("Zu0a X Northwind Client", "Ocean")
+local LocalPlayer = Players.LocalPlayer
+
+--// GROUP LINK
+local RobloxGroup = "https://www.roblox.com/communities/6391660/Grubmen-Forgeworks-UGC#!/store"
+
+--// COPY GROUP LINK
+if setclipboard then
+    setclipboard(RobloxGroup)
+    print("Roblox group link copied to clipboard!")
+end
+
+--// REMOVE OLD MESSAGE
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+local oldGui = PlayerGui:FindFirstChild("Zu0aGroupMessage")
+if oldGui then
+    oldGui:Destroy()
+end
+
+--// SCREEN GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "Zu0aGroupMessage"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.DisplayOrder = 999999
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Global
+ScreenGui.Parent = PlayerGui
+
+--// MAIN FRAME
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "Message"
+MainFrame.AnchorPoint = Vector2.new(0.5, 0)
+MainFrame.Position = UDim2.new(0.5, 0, 0, 70)
+MainFrame.Size = UDim2.new(0, 800, 0, 260)
+MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 28)
+MainFrame.BackgroundTransparency = 0.03
+MainFrame.BorderSizePixel = 0
+MainFrame.ZIndex = 10
+MainFrame.Parent = ScreenGui
+
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 16)
+Corner.Parent = MainFrame
+
+local Stroke = Instance.new("UIStroke")
+Stroke.Color = Color3.fromRGB(90, 90, 95)
+Stroke.Thickness = 2
+Stroke.Parent = MainFrame
+
+--// AVATAR
+local Avatar = Instance.new("ImageLabel")
+Avatar.Name = "Avatar"
+Avatar.BackgroundColor3 = Color3.fromRGB(40, 40, 44)
+Avatar.Position = UDim2.new(0, 25, 0.5, -65)
+Avatar.Size = UDim2.new(0, 130, 0, 130)
+Avatar.Image = "rbxthumb://type=AvatarHeadShot&id=219699846&w=420&h=420"
+Avatar.ScaleType = Enum.ScaleType.Crop
+Avatar.ZIndex = 11
+Avatar.Parent = MainFrame
+
+local AvatarCorner = Instance.new("UICorner")
+AvatarCorner.CornerRadius = UDim.new(1, 0)
+AvatarCorner.Parent = Avatar
+
+local AvatarStroke = Instance.new("UIStroke")
+AvatarStroke.Color = Color3.fromRGB(255, 255, 255)
+AvatarStroke.Thickness = 3
+AvatarStroke.Parent = Avatar
+
+--// TITLE
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.BackgroundTransparency = 1
+Title.Position = UDim2.new(0, 180, 0, 22)
+Title.Size = UDim2.new(1, -205, 0, 35)
+Title.Font = Enum.Font.GothamBold
+Title.Text = "A MESSAGE FROM ZU0A"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextSize = 25
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.ZIndex = 11
+Title.Parent = MainFrame
+
+--// MESSAGE
+local Message = Instance.new("TextLabel")
+Message.Name = "Message"
+Message.BackgroundTransparency = 1
+Message.Position = UDim2.new(0, 180, 0, 65)
+Message.Size = UDim2.new(1, -205, 0, 105)
+Message.Font = Enum.Font.Gotham
+Message.Text = "Hello! This is a message from Zu0a.\n\nI've copied a link to my ROBLOX UGC Group to your clipboard.\nIf you could take a few seconds to Ctrl+V it into your browser\nand drop a join, I'd really appreciate it. Thank you! Loading GUI!"
+Message.TextColor3 = Color3.fromRGB(220, 220, 225)
+Message.TextSize = 17
+Message.TextWrapped = true
+Message.TextXAlignment = Enum.TextXAlignment.Left
+Message.TextYAlignment = Enum.TextYAlignment.Top
+Message.ZIndex = 11
+Message.Parent = MainFrame
+
+--// COPIED TEXT
+local Copied = Instance.new("TextLabel")
+Copied.Name = "Copied"
+Copied.BackgroundTransparency = 1
+Copied.Position = UDim2.new(0, 180, 1, -55)
+Copied.Size = UDim2.new(1, -330, 0, 25)
+Copied.Font = Enum.Font.GothamMedium
+Copied.Text = "✓ GROUP LINK COPIED TO CLIPBOARD"
+Copied.TextColor3 = Color3.fromRGB(120, 220, 140)
+Copied.TextSize = 14
+Copied.TextXAlignment = Enum.TextXAlignment.Left
+Copied.ZIndex = 11
+Copied.Parent = MainFrame
+
+--// COUNTDOWN
+local Countdown = Instance.new("TextLabel")
+Countdown.Name = "Countdown"
+Countdown.BackgroundTransparency = 1
+Countdown.AnchorPoint = Vector2.new(1, 0.5)
+Countdown.Position = UDim2.new(1, -25, 1, -43)
+Countdown.Size = UDim2.new(0, 100, 0, 45)
+Countdown.Font = Enum.Font.GothamBold
+Countdown.Text = "10"
+Countdown.TextColor3 = Color3.fromRGB(255, 255, 255)
+Countdown.TextSize = 32
+Countdown.TextXAlignment = Enum.TextXAlignment.Right
+Countdown.ZIndex = 11
+Countdown.Parent = MainFrame
+
+--// COUNTDOWN LABEL
+local CountdownLabel = Instance.new("TextLabel")
+CountdownLabel.Name = "CountdownLabel"
+CountdownLabel.BackgroundTransparency = 1
+CountdownLabel.AnchorPoint = Vector2.new(1, 0)
+CountdownLabel.Position = UDim2.new(1, -25, 1, -75)
+CountdownLabel.Size = UDim2.new(0, 100, 0, 20)
+CountdownLabel.Font = Enum.Font.Gotham
+CountdownLabel.Text = "CLOSING IN"
+CountdownLabel.TextColor3 = Color3.fromRGB(150, 150, 155)
+CountdownLabel.TextSize = 11
+CountdownLabel.TextXAlignment = Enum.TextXAlignment.Right
+CountdownLabel.ZIndex = 11
+CountdownLabel.Parent = MainFrame
+
+--// COUNTDOWN SOUND
+local CountdownSound = Instance.new("Sound")
+CountdownSound.Name = "CountdownSound"
+CountdownSound.SoundId = "rbxassetid://6026984224"
+CountdownSound.Volume = 0.6
+CountdownSound.Parent = MainFrame
+
+--// COUNTDOWN
+for seconds = 10, 0, -1 do
+
+    Countdown.Text = tostring(seconds)
+
+    -- Play beep every second
+    if seconds <= 10 then
+        CountdownSound:Play()
+    end
+
+    if seconds > 0 then
+        task.wait(1)
+    end
+end
+
+--// FADE OUT
+local FadeInfo = TweenInfo.new(
+    1.5,
+    Enum.EasingStyle.Quad,
+    Enum.EasingDirection.Out
+)
+
+local FadeTweens = {
+    TweenService:Create(MainFrame, FadeInfo, {
+        BackgroundTransparency = 1
+    }),
+
+    TweenService:Create(Title, FadeInfo, {
+        TextTransparency = 1
+    }),
+
+    TweenService:Create(Message, FadeInfo, {
+        TextTransparency = 1
+    }),
+
+    TweenService:Create(Copied, FadeInfo, {
+        TextTransparency = 1
+    }),
+
+    TweenService:Create(Countdown, FadeInfo, {
+        TextTransparency = 1
+    }),
+
+    TweenService:Create(CountdownLabel, FadeInfo, {
+        TextTransparency = 1
+    }),
+
+    TweenService:Create(Avatar, FadeInfo, {
+        ImageTransparency = 1,
+        BackgroundTransparency = 1
+    }),
+
+    TweenService:Create(Stroke, FadeInfo, {
+        Transparency = 1
+    }),
+
+    TweenService:Create(AvatarStroke, FadeInfo, {
+        Transparency = 1
+    }),
+}
+
+for _, tween in ipairs(FadeTweens) do
+    tween:Play()
+end
+
+task.wait(1.6)
+
+ScreenGui:Destroy()
+
+local Window = Library.CreateLib("Zu0aX Northwind Client", "Ocean")
  
     -- MAIN
     
-	            local Main = Window:NewTab("Updated - 9/1/26")
-        local MainSection = Main:NewSection("Equipped ESP")
+	            local Main = Window:NewTab("Updated - 9/26/26")
 		local MainSection = Main:NewSection("- DEVELOPER -")
         local MainSection = Main:NewSection("Zu0a")
 
@@ -108,7 +328,47 @@ MainSection:NewToggle("Infinite Stamina", "Keeps stamina at max", function(state
         _G.InfiniteStamina = false
     end
 end)
+MainSection:NewButton("Infinite Storage", "test.", function()
+local MAX_CAPACITY = 1000000000
 
+for _, v in pairs(getgc(true)) do
+    if typeof(v) == "table"
+        and rawget(v, "MaxBaseInventorySpace") == 50
+        and rawget(v, "MaxCappedInventorySpace") == 1000
+        and rawget(v, "MaxHardInventorySpace") == 300 then
+
+        print("FOUND ACTUAL INVENTORY CONFIG")
+
+        rawset(v, "MaxBaseInventorySpace", MAX_CAPACITY)
+        rawset(v, "MaxCappedInventorySpace", MAX_CAPACITY)
+        rawset(v, "MaxHardInventorySpace", MAX_CAPACITY)
+
+        print("Base:", rawget(v, "MaxBaseInventorySpace"))
+        print("Capped:", rawget(v, "MaxCappedInventorySpace"))
+        print("Hard:", rawget(v, "MaxHardInventorySpace"))
+
+        -- Update SPACE TAKEN text
+        local player = game:GetService("Players").LocalPlayer
+        local textGui = player.PlayerGui.InterfaceGuis.Inventory.Main.SpaceTaken.Title.TextGui
+
+        if textGui then
+            local currentText = textGui.Text
+
+            -- Keep the current Space Taken amount,
+            -- replace the capacity, and preserve "SPACE TAKEN"
+            local spaceTaken = currentText:match("^(%d+%.?%d*)")
+
+            if spaceTaken then
+                textGui.Text = spaceTaken .. " / " .. MAX_CAPACITY .. " SPACE TAKEN"
+            else
+                textGui.Text = "0 / " .. MAX_CAPACITY .. " SPACE TAKEN"
+            end
+
+            print("Inventory TEXT:", textGui.Text)
+        end
+    end
+end
+end)
 MainSection:NewToggle("Auto Reload Guns", "keep them held out!", function(state)
 
     if state then
@@ -2974,7 +3234,72 @@ end)
 
     local Main = Window:NewTab("Misc")
         local MainSection = Main:NewSection("Misc Features")
+MainSection:NewTextBox("Play Animation", "Enter nothing to Stop. Dont use catalog IDs.", function(txt)
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
 
+    -- Stop existing animation
+    local existingTrack = getgenv().MyAnimationTrack
+
+    if existingTrack then
+        pcall(function()
+            existingTrack:Stop()
+            existingTrack:Destroy()
+        end)
+
+        getgenv().MyAnimationTrack = nil
+        print("Previous animation stopped")
+    end
+
+    -- Empty input or 0 = stop
+    local input = tostring(txt):gsub("^%s*(.-)%s*$", "%1")
+
+    if input == "" or input == "0" then
+        print("Animation stopped")
+        return
+    end
+
+    -- Get character
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+
+    -- Get/create Animator
+    local animator = humanoid:FindFirstChildOfClass("Animator")
+
+    if not animator then
+        animator = Instance.new("Animator")
+        animator.Parent = humanoid
+    end
+
+    -- Accept either a raw ID or rbxassetid://ID
+    local animationId
+
+    if input:find("rbxassetid://") then
+        animationId = input
+    else
+        animationId = "rbxassetid://" .. input
+    end
+
+    -- Create animation
+    local animation = Instance.new("Animation")
+    animation.AnimationId = animationId
+
+    local success, track = pcall(function()
+        return animator:LoadAnimation(animation)
+    end)
+
+    if not success or not track then
+        warn("Failed to load animation:", animationId)
+        return
+    end
+
+    track.Looped = true
+    track:Play()
+
+    getgenv().MyAnimationTrack = track
+
+    print("Animation started:", animationId)
+end)
         MainSection:NewTextBox("Load House", "Enter house name", function(txt)
 
     local Players = game:GetService("Players")
